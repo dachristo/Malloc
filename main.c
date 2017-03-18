@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:37:46 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/15 21:58:21 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/03/18 17:34:06 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ int main(int argc, char **argv)
 {
 	(void)argc;
 	(void)**argv;
-	char *test = ft_malloc(20);
-	for (int i = 0; i < 20; i++)
+	char *test = (char *)ft_malloc(42);
+	int i = 0;
+	while(i < 42)
 	{
 		test[i] = '*';
+		i++;
 	}
+	test[i] = '\0';
 	printf("%s\n", test);
+	while(1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/15 22:36:06 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/03/18 16:31:44 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 t_alloc	*singleton(void)
 {
-	static t_alloc	*alloc = (t_alloc *)malloc(sizeof(t_alloc));
-	return (t_alloc);
+	t_alloc *alloc = (t_alloc *)mmap(0, sizeof(t_alloc), PROT_READ | PROT_WRITE,
+			MAP_ANON | MAP_PRIVATE, -1, 0);
+	return (alloc);
 }
 
-t_alloc *new_tiny(t_alloc *alloc)
+t_region_d *new_tiny(t_region_d *data_tiny)
 {
-	alloc->next_tiny = (t_alloc *)malloc(sizeof(t_alloc));
-	return (alloc->next_tiny);
-}
-
-t_alloc *new_small(t_alloc *alloc)
-{
-	alloc->next_small = (t_alloc *)malloc(sizeof(t_alloc));
-	return (alloc->next_small);
+	data_tiny = (t_region_d *)mmap(0, sizeof(t_region_d) + TINY, PROT_READ |
+			PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	data_tiny->next = NULL;
+	data_tiny->prev = NULL;
+	return (data_tiny);
 }
