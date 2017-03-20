@@ -6,14 +6,15 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/19 21:28:34 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/03/20 22:37:49 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 # define M 1000000
-# define TINY (size_t)((2*M + getpagesize()) / getpagesize())*getpagesize()
+# define TINY 4096
+//# define TINY (size_t)((2*M + getpagesize()) / getpagesize())*getpagesize()
 # define TINY_DATA 1024
 # define SMALL 133169152
 # define SMALL_DATA 127000
@@ -27,7 +28,7 @@ typedef struct			s_region_d
 {
 	size_t				len;
 	void				*data;
-	int					isfree;
+	//int					isfree;
 	struct s_region_d	*next;
 	struct s_region_d	*prev;
 }						t_region_d;

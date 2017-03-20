@@ -6,17 +6,17 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/19 21:52:20 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/03/20 22:34:33 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void	*ft_tiny_ptr(size_t len)
+void	*ft_tiny_ptr(size_t len)
 {
 	t_alloc		*alloc;
 	t_region_d	data_tiny;
-
+	
 	alloc = singleton();
 	if (!alloc->data_tiny)
 	{
@@ -26,8 +26,8 @@ static void	*ft_tiny_ptr(size_t len)
 	}
 	else
 	{
-		printf("%lu, %lu\n", alloc->size_tiny_used + len, TINY / 50);
-		if ((alloc->size_tiny_used) + len > TINY / 50)
+		printf("%lu, %d\n", alloc->size_tiny_used, TINY);
+		if ((alloc->size_tiny_used) + len > TINY)
 		{
 			alloc->data_last_tiny = *new_tiny(&alloc->data_last_tiny, len);
 		}
@@ -43,14 +43,12 @@ void		*ft_malloc(size_t size)
 {
 	void	*ptr;
 
-	if (size < TINY_DATA)
-		return (ft_tiny_ptr(size));
+	if (size)
+		ptr = ft_tiny_ptr(size);
 	else
-	{
-		ptr = (void *)mmap(0, size, PROT_READ | PROT_WRITE,
+		ptr = mmap(0, size, PROT_READ | PROT_WRITE,
 				MAP_ANON | MAP_PRIVATE, -1, 0);
-		return (ptr);
-	}
+	return (ptr);
 }
 
 void		free_tiny(void *ptr, t_alloc *alloc)
@@ -64,7 +62,7 @@ void		free_tiny(void *ptr, t_alloc *alloc)
 	}
 	if (data_tiny->data == ptr)
 	{
-		data_tiny->isfree = 1;
+		//data_tiny->isfree = 1;
 		ft_bzero(ptr, data_tiny->len);
 		alloc->size_tiny_used -= data_tiny->len;
 	}
