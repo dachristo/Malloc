@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/20 22:34:33 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/03/23 16:51:25 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,29 @@
 void	*ft_tiny_ptr(size_t len)
 {
 	t_alloc		*alloc;
-	t_region_d	data_tiny;
 	
 	alloc = singleton();
 	if (!alloc->data_tiny)
 	{
 		alloc->data_tiny = new_tiny(alloc->data_tiny, len);
 		alloc->size_tiny_used = alloc->data_tiny->len + sizeof(t_region_d);
+		alloc->total_tiny_used = 0;
 		return (alloc->data_tiny->data);
 	}
 	else
 	{
-		printf("%lu, %d\n", alloc->size_tiny_used, TINY);
-		if ((alloc->size_tiny_used) + len > TINY)
+		if ((alloc->size_tiny_used) + len > TINY - 1)
 		{
+			alloc->size_tiny_used = 0;
+			alloc->total_tiny_used++;
 			alloc->data_last_tiny = *new_tiny(&alloc->data_last_tiny, len);
+			alloc->size_tiny_used = alloc->data_last_tiny.len + sizeof(t_region_d);
 		}
 		else
 		{
-			data_tiny = *new_data_in_tiny(alloc->data_tiny, len, alloc);
+			alloc->data_last_tiny = *new_data_in_tiny(alloc->data_tiny, len, alloc);
 		}
-		return (data_tiny.data);
+		return (alloc->data_last_tiny.data);
 	}
 }
 
@@ -43,7 +45,7 @@ void		*ft_malloc(size_t size)
 {
 	void	*ptr;
 
-	if (size)
+	if (size < TINY_DATA)
 		ptr = ft_tiny_ptr(size);
 	else
 		ptr = mmap(0, size, PROT_READ | PROT_WRITE,
@@ -62,7 +64,7 @@ void		free_tiny(void *ptr, t_alloc *alloc)
 	}
 	if (data_tiny->data == ptr)
 	{
-		//data_tiny->isfree = 1;
+		data_tiny->isfree = 1;
 		ft_bzero(ptr, data_tiny->len);
 		alloc->size_tiny_used -= data_tiny->len;
 	}
