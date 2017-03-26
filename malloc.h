@@ -6,20 +6,20 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/23 16:51:40 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/03/26 17:54:39 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 # define M 1000000
-#define TINY 4096
-//# define TINY (size_t)((2*M + getpagesize()) / getpagesize())*getpagesize()
+# define TINY (size_t)((2*M + getpagesize()) / getpagesize())*getpagesize()
 # define TINY_DATA 1024
 # define SMALL 133169152
 # define SMALL_DATA 127000
 # include <stddef.h>
 # include <sys/mman.h>
+# include <sys/types.h>
 # include <stdio.h>
 # include <unistd.h>
 # include "libft/libft.h"
@@ -29,6 +29,7 @@ typedef struct			s_region_d
 	size_t				len;
 	void				*data;
 	int					isfree;
+	size_t				len_left;
 	struct s_region_d	*next;
 	struct s_region_d	*prev;
 }						t_region_d;

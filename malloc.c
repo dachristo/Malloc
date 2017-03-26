@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/23 16:51:25 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/03/26 16:10:05 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	*ft_tiny_ptr(size_t len)
 		}
 		else
 		{
+			printf("new_data\n");
 			alloc->data_last_tiny = *new_data_in_tiny(alloc->data_tiny, len, alloc);
 		}
 		return (alloc->data_last_tiny.data);

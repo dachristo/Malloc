@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:37:46 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/23 16:50:27 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/03/26 18:21:54 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv)
+int main(int argc, char **argv)	
 {
-	(void)argc;
-	(void)**argv;
-	char *test2;
-	int i = 0;
-	while(i < 1000)
+	char *test;
+	/*while (argc - 1)
 	{
-		test2 = ft_malloc(i);
+		printf("%d\n", atoi(argv[argc - 1]));
+		test = ft_malloc(atoi(argv[argc - 1]));
+		(void)test;
+		argc--;
 		show_alloc_mem();
-		i++;
-	}
-	test2[0] = '\0';
-	/*char *test = (char *)ft_malloc(84);
+	}*/
+	test = ft_malloc(50);
 	show_alloc_mem();
-	i = 0;
-	while(i < 84)
-	{
-		test[i] = '*';
-		i++;
-	}
-	test[i] = '\0';
-	test2[i] = '\0';
-	printf("%s\n", test);
-	printf("%s\n", test2);
-	ft_free(test);
+	char *test2 = ft_malloc(15);
 	show_alloc_mem();
-	test = (char *)ft_malloc(84);
+	char *test3 = ft_malloc(100);
 	show_alloc_mem();
-	printf("%s\n", test);
-	*/return (0);
+	char *test4 = ft_malloc(96);
+	show_alloc_mem();
+	char *test5 = ft_malloc(12);
+	show_alloc_mem();
+	ft_free(test3);
+	show_alloc_mem();
+	char *test6 = ft_malloc(10);
+	show_alloc_mem();
+	return (0);
 }

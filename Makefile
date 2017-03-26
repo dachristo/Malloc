@@ -6,7 +6,7 @@
 #    By: dchristo <ybarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 11:35:46 by dchristo          #+#    #+#              #
-#    Updated: 2017/03/19 19:37:12 by dchristo         ###   ########.fr        #
+#    Updated: 2017/03/26 16:23:18 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ PATH_INC = ./libft/
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c malloc.c toolbox.c
 
