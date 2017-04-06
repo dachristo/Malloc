@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/26 16:10:05 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/06 17:35:06 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ void		free_tiny(void *ptr, t_alloc *alloc)
 	{
 		data_tiny->isfree = 1;
 		ft_bzero(ptr, data_tiny->len);
+		if (data_tiny->len_left != 0)
+		{
+			data_tiny->len += data_tiny->len_left;
+			data_tiny->len_left = 0;
+		}
 		alloc->size_tiny_used -= data_tiny->len;
 	}
 }

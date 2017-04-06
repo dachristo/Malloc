@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/26 18:51:12 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/06 17:29:36 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ t_region_d	*new_data_in_tiny(t_region_d *data_tiny, size_t len, t_alloc *alloc)
 	{
 		printf("is free\n");
 		data_tiny->isfree = 0;
-		if (data_tiny->len > len + 40)
+		if (data_tiny->len > len + sizeof(t_region_d))
 		{
 			p = data_tiny->next;
 			ptr = data_tiny->next->next;
 			data_tiny->next = p - data_tiny->len + len;
 			data_tiny->next->isfree = 1;
-			data_tiny->next->len = data_tiny->len - len;
+			data_tiny->next->len = data_tiny->len - len - sizeof(t_region_d);
 			data_tiny->next->data = data_tiny->next + 1;
 			data_tiny->next->prev = data_tiny;
 			data_tiny->next->next = p;
@@ -99,8 +99,8 @@ void		show_alloc_mem(void)
 	{
 		if (data_tiny->isfree != 2)
 		{
-			printf("%p - %p : %zu octects %d\n", data_tiny->data, data_tiny->data +
-					data_tiny->len, data_tiny->len, data_tiny->isfree);
+			printf("%p - %p : %zu octects %d - %zu\n", data_tiny->data, data_tiny->data +
+					data_tiny->len, data_tiny->len, data_tiny->isfree, data_tiny->len_left);
 		}
 		data_tiny = data_tiny->next;
 	}
