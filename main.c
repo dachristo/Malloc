@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:37:46 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/06 17:34:46 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/06 20:00:45 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 	show_alloc_mem();
 	char *test7 = ft_malloc(10);
 	show_alloc_mem();
-	ft_free(test7);
+	test7 = ft_realloc(test7, 150);
 	show_alloc_mem();
 	return (0);
 }

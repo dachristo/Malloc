@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/03/26 17:54:39 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/06 19:59:14 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ t_region_d				*new_data_in_tiny(t_region_d *data_tiny, size_t len,
 								t_alloc *alloc);
 void					show_alloc_mem(void);
 void					ft_free(void *ptr);
-
+void					*ft_realloc(void *ptr, size_t size);
 #endif

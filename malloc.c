@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/06 19:37:49 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/06 20:03:07 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,21 @@ void		*realloc_tiny(void *ptr, size_t size, t_alloc *alloc)
 	t_region_d 	*data_tiny;
 	void 		*p;
 	data_tiny = alloc->data_tiny;
-	while (dat_tiny->data != ptr)
+	while (data_tiny->data != ptr)
 	{
 		data_tiny = data_tiny->next;
 	}
-	if (data_tiny->len < size)
+	if (data_tiny->len > size)
 	{
 		data_tiny->len = size;
 		data_tiny->len_left = data_tiny->len - size;
 		p = data_tiny->data;
 	}
 	else
+	{
 		p = ft_malloc(size);
+		ft_free(data_tiny->data);
+	}
 	return (p);
 }
 
@@ -101,7 +104,8 @@ void		*ft_realloc(void *ptr, size_t size)
 	t_alloc	*alloc;
 
 	alloc = singleton();
-	realloc_tiny(ptr, size, alloc);
+	return (realloc_tiny(ptr, size, alloc));
+	
 }
 
 void		ft_free(void *ptr)
