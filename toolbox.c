@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/11 18:52:18 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/11 19:45:07 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,20 +111,31 @@ t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc, int region
 void		show_alloc_mem(void)
 {
 	t_alloc		*alloc;
-	t_region_d	*data_tiny;
+	t_region_d	*data;
 
 	alloc = singleton();
-	data_tiny = alloc->data_tiny;
-	printf("TINY : %p\n", data_tiny);
-	while (data_tiny != NULL)
+	data = alloc->data_tiny;
+	printf("TINY : %p\n", data);
+	while (data != NULL)
 	{
-		if (data_tiny->isfree != 2)
+		if (data->isfree != 2)
 		{
-			printf("%p - %p : %zu octects %d - %zu\n", data_tiny->data, data_tiny->data +
-					data_tiny->len, data_tiny->len, data_tiny->isfree, data_tiny->len_left);
+			printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +
+					data->len, data->len, data->isfree, data->len_left);
 		}
-		data_tiny = data_tiny->next;
+		data = data->next;
 	}
 	printf("%zu total octects used on %lu\n", TINY * alloc->total_tiny_used + alloc->size_tiny_used, TINY + TINY * alloc->total_tiny_used);
+	data = alloc->data_small;
+	printf("SMALL : %p\n", data);
+	while(data != NULL)
+	{
+		if (data->isfree != 2)
+		{
+			printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +	data->len, data->len, data->isfree, data->len_left);
+		}
+		data = data->next;
+	}
+	printf("%zu total octects used on %lu\n", SMALL * alloc->total_small_used + alloc->size_small_used, SMALL + SMALL * alloc->total_small_used);
 	printf("------------------------------------------------------------\n");
 }

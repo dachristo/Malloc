@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/11 18:51:49 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/11 19:41:53 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # define M 1000000
 # define TINY (size_t)((2*M + getpagesize()) / getpagesize())*getpagesize()
 # define TINY_DATA 1024
-# define SMALL 133169152
+# define SMALL (size_t)((16*M + getpagesize())/getpagesize())*getpagesize()
 # define SMALL_DATA 127000
 # include <stddef.h>
 # include <sys/mman.h>
