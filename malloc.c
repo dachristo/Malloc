@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/06 20:03:07 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/11 18:34:40 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_tiny_ptr(size_t len)
 	alloc = singleton();
 	if (!alloc->data_tiny)
 	{
-		alloc->data_tiny = new_tiny(alloc->data_tiny, len);
+		alloc->data_tiny = new_data(alloc->data_tiny, len, TINY);
 		alloc->size_tiny_used = alloc->data_tiny->len + sizeof(t_region_d);
 		alloc->total_tiny_used = 0;
 		return (alloc->data_tiny->data);
@@ -30,15 +30,39 @@ void	*ft_tiny_ptr(size_t len)
 		{
 			alloc->size_tiny_used = 0;
 			alloc->total_tiny_used++;
-			alloc->data_last_tiny = *new_tiny(&alloc->data_last_tiny, len);
+			alloc->data_last_tiny = *new_data(&alloc->data_last_tiny, len, TINY);
 			alloc->size_tiny_used = alloc->data_last_tiny.len + sizeof(t_region_d);
 		}
 		else
-		{
-			printf("new_data\n");
-			alloc->data_last_tiny = *new_data_in_tiny(alloc->data_tiny, len, alloc);
-		}
+			alloc->data_last_tiny = *new_data_in(alloc->data_tiny, len, alloc, 0);
 		return (alloc->data_last_tiny.data);
+	}
+}
+
+void	*ft_small_ptr(size_t len)
+{
+	t_alloc		*alloc;
+	
+	alloc = singleton();
+	if (!alloc->data_small)
+	{
+		alloc->data_small = new_data(alloc->data_small, len, SMALL);
+		alloc->size_small_used = alloc->data_small->len + sizeof(t_region_d);
+		alloc->total_small_used = 0;
+		return (alloc->data_small->data);
+	}
+	else
+	{
+		if ((alloc->size_small_used) + len > SMALL - 1)
+		{
+			alloc->size_small_used = 0;
+			alloc->total_small_used++;
+			alloc->data_last_small = *new_data(&alloc->data_last_small, len, SMALL);
+			alloc->size_small_used = alloc->data_last_small.len + sizeof(t_region_d);
+		}
+		else
+			alloc->data_last_small = *new_data_in(alloc->data_small, len, alloc, 1);
+		return (alloc->data_last_small.data);
 	}
 }
 
@@ -48,6 +72,8 @@ void		*ft_malloc(size_t size)
 
 	if (size < TINY_DATA)
 		ptr = ft_tiny_ptr(size);
+	else if (size < SMALL_DATA)
+		ptr = ft_small_ptr(size);
 	else
 		ptr = mmap(0, size, PROT_READ | PROT_WRITE,
 				MAP_ANON | MAP_PRIVATE, -1, 0);

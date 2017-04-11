@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/06 17:29:36 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/11 18:52:18 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,71 +19,92 @@ t_alloc		*singleton(void)
 	return (&alloc);
 }
 
-t_region_d	*new_tiny(t_region_d *data_tiny, size_t len)
+t_region_d	*new_data(t_region_d *data, size_t len, size_t region)
 {
 	void *p;
-	p = mmap(0, TINY, PROT_READ | PROT_WRITE,
+	p = mmap(0, region, PROT_READ | PROT_WRITE,
 			MAP_ANON | MAP_PRIVATE, -1, 0);
 	if (p == (void *) -1)
 		return (NULL);
-	data_tiny = p;
-	data_tiny->data = p + sizeof(t_region_d);
-	data_tiny->len = len;
-	data_tiny->isfree = 0;
-	data_tiny->next = NULL;
-	data_tiny->prev = NULL;
-	return (data_tiny);
+	data = p;
+	data->data = p + sizeof(t_region_d);
+	data->len = len;
+	data->isfree = 0;
+	data->next = NULL;
+	data->prev = NULL;
+	return (data);
 }
 
-t_region_d	*new_data_in_tiny(t_region_d *data_tiny, size_t len, t_alloc *alloc)
+t_region_d	*new_data_in_if(t_region_d* data, size_t len, t_alloc *alloc, int region)
+{
+	void *p;
+
+	p = data;
+	data->next = p + sizeof(t_region_d) + data->len;
+	data->next->len = len;
+	data->next->data = p + 2 * sizeof(t_region_d) + data->len;
+	data->next->isfree = 0;
+	data->next->prev = p;
+	data->next->next = NULL;
+	if (region == 0)
+		alloc->size_tiny_used += data->next->len + sizeof(t_region_d);
+	else if (region == 1)
+		alloc->size_small_used += data->next->len + sizeof(t_region_d);
+	return (data->next);
+}
+
+t_region_d	*new_data_in_else(t_region_d* data, size_t len, t_alloc *alloc, int region)
 {
 	void *p;
 	void *ptr;
-
-	while ((data_tiny->next != NULL && data_tiny->isfree == 0) ||
-		   	(data_tiny->isfree == 1 && data_tiny->len <= len))
+	
+	data->isfree = 0;
+	if (data->len > len + sizeof(t_region_d))
 	{
-		printf("next %zu,  %zu, %d\n", data_tiny->len, len, data_tiny->isfree);
-		data_tiny = data_tiny->next;
+		p = data->next;
+		ptr = data->next->next;
+		data->next = p - data->len + len;
+		data->next->isfree = 1;
+		data->next->len = data->len - len - sizeof(t_region_d);
+		data->next->data = data->next + 1;
+		data->next->prev = data;
+		data->next->next = p;
+		data->len = len;
+		data->next->next->next = ptr;
+		data->next->next->prev = data->next;
 	}
-	if (data_tiny->next == NULL || data_tiny->isfree == 0)
+	else
 	{
-		printf("%zu\n", data_tiny->len);
-		p = data_tiny;
-		data_tiny->next = p + sizeof(t_region_d) + data_tiny->len;
-		data_tiny->next->len = len;
-		data_tiny->next->data = p + 2 * sizeof(t_region_d) + data_tiny->len;
-		data_tiny->next->isfree = 0;
-		data_tiny->next->prev = p;
-		data_tiny->next->next = NULL;
-		alloc->size_tiny_used += data_tiny->next->len + sizeof(t_region_d);
-		return (data_tiny->next);
+		data->len_left = data->len - len;
+		data->len = len;
+	}
+	if (region == 0)
+		alloc->size_tiny_used += data->next->len + sizeof(t_region_d);
+	else if (region == 1)
+		alloc->size_small_used += data->next->len + sizeof(t_region_d);
+	return (data);
+
+}
+
+t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc, int region)
+{
+	void *ptr;
+
+	while ((data->next != NULL && data->isfree == 0) ||
+			(data->isfree == 1 && data->len <= len))
+	{
+		printf("next %zu,  %zu, %d\n", data->len, len, data->isfree);
+		data = data->next;
+	}
+	if (data->next == NULL || data->isfree == 0)
+	{
+		printf("%zu\n", data->len);
+		return (new_data_in_if(data, len, alloc, region));
 	}
 	else
 	{
 		printf("is free\n");
-		data_tiny->isfree = 0;
-		if (data_tiny->len > len + sizeof(t_region_d))
-		{
-			p = data_tiny->next;
-			ptr = data_tiny->next->next;
-			data_tiny->next = p - data_tiny->len + len;
-			data_tiny->next->isfree = 1;
-			data_tiny->next->len = data_tiny->len - len - sizeof(t_region_d);
-			data_tiny->next->data = data_tiny->next + 1;
-			data_tiny->next->prev = data_tiny;
-			data_tiny->next->next = p;
-			data_tiny->len = len;
-			data_tiny->next->next->next = ptr;
-			data_tiny->next->next->prev = data_tiny->next;
-		}
-		else
-		{
-			data_tiny->len_left = data_tiny->len - len;
-			data_tiny->len = len;
-		}
-		alloc->size_tiny_used += len;
-		return (data_tiny);
+		return (new_data_in_else(data, len, alloc, region));
 	}
 }
 

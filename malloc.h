@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/06 19:59:14 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/11 18:51:49 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,20 @@ typedef struct			s_alloc
 	size_t				total_tiny_used;
 	struct s_region_d	data_last_tiny;
 	struct s_region_d	*data_small;
+	size_t				size_small_used;
+	size_t				total_small_used;
 	struct s_region_d	data_last_small;
 	struct s_region_d	*data_large;
+	size_t				size_large_used;
+	size_t				total_large_used;
 	struct s_region_d	data_last_large;
 }						t_alloc;
 
 void					*ft_malloc(size_t len);
 t_alloc					*singleton(void);
-t_region_d				*new_tiny(t_region_d *data_tiny, size_t len);
-t_region_d				*new_data_in_tiny(t_region_d *data_tiny, size_t len,
-								t_alloc *alloc);
+t_region_d				*new_data(t_region_d *data_tiny, size_t len, size_t region);
+t_region_d				*new_data_in(t_region_d *data_tiny, size_t len,
+								t_alloc *alloc, int region);
 void					show_alloc_mem(void);
 void					ft_free(void *ptr);
 void					*ft_realloc(void *ptr, size_t size);
