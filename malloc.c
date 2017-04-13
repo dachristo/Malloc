@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/13 18:46:24 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/13 19:48:02 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,13 @@ void		*ft_malloc(size_t size)
 	return (ptr);
 }
 
+t_region_d	*find_data(t_region_d *data, void *ptr)
+{
+	while (data->data != NULL && data->data != ptr)
+		data = data->next;
+	return (data->data);
+}
+
 void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 {
 	void 		*p;
@@ -99,13 +106,6 @@ void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 	return (p);
 }
 
-t_region_d	*find_data(t_region_d *data, void *ptr)
-{
-	while (data->data != ptr)
-		data = data->next;
-	return (data);
-}
-
 void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 {
 	data = find_data(data, ptr);
@@ -121,7 +121,7 @@ void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 		if (region == 1)
 			alloc->size_tiny_used -= data->len;
 		else if (region == 2)
-			alloc->size_small_used -= data->len
+			alloc->size_small_used -= data->len;
 	}
 }
 
@@ -134,7 +134,8 @@ void		*ft_realloc(void *ptr, size_t size)
 		return (realloc_data(ptr, size, alloc->data_tiny));
 	else if (find_data(alloc->data_small, ptr) != NULL)
 		return (realloc_data(ptr, size, alloc->data_small));
-	else (realloc_data(ptr, size, alloc->data_large));
+	else
+		return (realloc_data(ptr, size, alloc->data_large));	
 }
 
 void		ft_free(void *ptr)
