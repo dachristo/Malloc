@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/13 19:48:02 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/16 17:53:31 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_tiny_ptr(size_t len)
 {
 	t_alloc		*alloc;
-	
+
 	alloc = singleton();
 	if (!alloc->data_tiny)
 	{
@@ -42,7 +42,7 @@ void	*ft_tiny_ptr(size_t len)
 void	*ft_small_ptr(size_t len)
 {
 	t_alloc		*alloc;
-	
+
 	alloc = singleton();
 	if (!alloc->data_small)
 	{
@@ -82,15 +82,18 @@ void		*ft_malloc(size_t size)
 
 t_region_d	*find_data(t_region_d *data, void *ptr)
 {
-	while (data->data != NULL && data->data != ptr)
-		data = data->next;
-	return (data->data);
+	if (data != NULL)
+	{
+		while (data != NULL && data->data != ptr)
+			data = data->next;
+	}
+	return (data);
 }
 
 void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 {
 	void 		*p;
-	
+
 	data = find_data(data, ptr);
 	if (data->len > size)
 	{
@@ -108,21 +111,27 @@ void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 
 void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 {
+	printf("ici\n");
 	data = find_data(data, ptr);
-	if (data->data == ptr)
+	printf("ici2\n");
+	if (data != NULL)
 	{
-		data->isfree = 1;
-		ft_bzero(ptr, data->len);
-		if (data->len_left != 0)
+		if (data->data == ptr)
 		{
-			data->len += data->len_left;
-			data->len_left = 0;
+			data->isfree = 1;
+			ft_bzero(ptr, data->len);
+			if (data->len_left != 0)
+			{
+				data->len += data->len_left;
+				data->len_left = 0;
+			}
+			if (region == 1)
+				alloc->size_tiny_used -= data->len;
+			else if (region == 2)
+				alloc->size_small_used -= data->len;
 		}
-		if (region == 1)
-			alloc->size_tiny_used -= data->len;
-		else if (region == 2)
-			alloc->size_small_used -= data->len;
 	}
+	printf("ici3\n");
 }
 
 void		*ft_realloc(void *ptr, size_t size)
@@ -130,9 +139,9 @@ void		*ft_realloc(void *ptr, size_t size)
 	t_alloc	*alloc;
 
 	alloc = singleton();
-	if (find_data(alloc->data_tiny, ptr) != NULL)
+	if (find_data(alloc->data_tiny, ptr))
 		return (realloc_data(ptr, size, alloc->data_tiny));
-	else if (find_data(alloc->data_small, ptr) != NULL)
+	else if (find_data(alloc->data_small, ptr))
 		return (realloc_data(ptr, size, alloc->data_small));
 	else
 		return (realloc_data(ptr, size, alloc->data_large));	
@@ -143,6 +152,9 @@ void		ft_free(void *ptr)
 	t_alloc	*alloc;
 
 	alloc = singleton();
+	printf("here\n");
 	free_data(ptr, alloc->data_tiny, alloc, 1);
+	printf("here2\n");
 	free_data(ptr, alloc->data_small, alloc, 2);
+	printf("here3\n");
 }
