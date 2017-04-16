@@ -6,7 +6,7 @@
 #    By: dchristo <ybarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 11:35:46 by dchristo          #+#    #+#              #
-#    Updated: 2017/03/26 16:23:18 by dchristo         ###   ########.fr        #
+#    Updated: 2017/04/16 19:07:28 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,11 +42,13 @@ $(NAME): $(OBJ)
 
 clean:
 	make -C libft/ clean
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
+	@echo "Clean done"
 
 fclean: clean
 	make -C libft/ fclean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
+	@echo "Fclean done"
 
 re: fclean all
 

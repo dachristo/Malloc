@@ -6,7 +6,7 @@
 #    By: ldubos <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/27 16:26:37 by ldubos            #+#    #+#              #
-#    Updated: 2016/02/22 22:33:04 by dchristo         ###   ########.fr        #
+#    Updated: 2017/04/16 19:07:41 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,9 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME) 
 
 $(NAME): $(OBJS)
-	ar rc  $(NAME) $(OBJS) 
-	ranlib $(NAME)
+	@ar rc  $(NAME) $(OBJS) 
+	@ranlib $(NAME)
+	@echo "\033[1;5;1;42m \033[0m\c";
 	@echo "\033[1;5;1;36m";
 	@echo "+---------------------------------------+";
 	@echo "|   _      _____ ____  ______ _______   |";
@@ -37,13 +38,16 @@ $(NAME): $(OBJS)
 	@echo "+--------------------------by dchristo--+";
 
 %.o : %.c
-	$(CC) $(FLAGS) $< -o $@
+	@$(CC) $(FLAGS) $< -o $@
+	@echo "\033[1;5;1;42m \033[0m\c";
 
 clean:	
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
+	@echo "Clean libft done"
 
 fclean:	clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "Fclean libft done"
 
 re:	fclean all
 
