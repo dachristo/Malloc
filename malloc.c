@@ -6,13 +6,13 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/16 17:57:11 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/16 18:28:19 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void	*ft_tiny_ptr(size_t len)
+void		*ft_tiny_ptr(size_t len)
 {
 	t_alloc		*alloc;
 
@@ -20,26 +20,26 @@ void	*ft_tiny_ptr(size_t len)
 	if (!alloc->data_tiny)
 	{
 		alloc->data_tiny = new_data(alloc->data_tiny, len, TINY);
-		alloc->size_tiny_used = alloc->data_tiny->len + sizeof(t_region_d);
-		alloc->total_tiny_used = 0;
+		alloc->size_t_used = alloc->data_tiny->len + sizeof(t_region_d);
+		alloc->total_t_used = 0;
 		return (alloc->data_tiny->data);
 	}
 	else
 	{
-		if ((alloc->size_tiny_used) + len > TINY - 1)
+		if ((alloc->size_t_used) + len > TINY - 1)
 		{
-			alloc->size_tiny_used = 0;
-			alloc->total_tiny_used++;
-			alloc->data_last_tiny = *new_data(&alloc->data_last_tiny, len, TINY);
-			alloc->size_tiny_used = alloc->data_last_tiny.len + sizeof(t_region_d);
+			alloc->size_t_used = 0;
+			alloc->total_t_used++;
+			alloc->data_l_tiny = *new_data(&alloc->data_l_tiny, len, TINY);
+			alloc->size_t_used = alloc->data_l_tiny.len + sizeof(t_region_d);
 		}
 		else
-			alloc->data_last_tiny = *new_data_in(alloc->data_tiny, len, alloc, 0);
-		return (alloc->data_last_tiny.data);
+			alloc->data_l_tiny = *new_data_in(alloc->data_tiny, len, alloc, 0);
+		return (alloc->data_l_tiny.data);
 	}
 }
 
-void	*ft_small_ptr(size_t len)
+void		*ft_small_ptr(size_t len)
 {
 	t_alloc		*alloc;
 
@@ -47,22 +47,23 @@ void	*ft_small_ptr(size_t len)
 	if (!alloc->data_small)
 	{
 		alloc->data_small = new_data(alloc->data_small, len, SMALL);
-		alloc->size_small_used = alloc->data_small->len + sizeof(t_region_d);
-		alloc->total_small_used = 0;
+		alloc->size_s_used = alloc->data_small->len + sizeof(t_region_d);
+		alloc->total_s_used = 0;
 		return (alloc->data_small->data);
 	}
 	else
 	{
-		if ((alloc->size_small_used) + len > SMALL - 1)
+		if ((alloc->size_s_used) + len > SMALL - 1)
 		{
-			alloc->size_small_used = 0;
-			alloc->total_small_used++;
-			alloc->data_last_small = *new_data(&alloc->data_last_small, len, SMALL);
-			alloc->size_small_used = alloc->data_last_small.len + sizeof(t_region_d);
+			alloc->size_s_used = 0;
+			alloc->total_s_used++;
+			alloc->data_l_small = *new_data(&alloc->data_l_small, len, SMALL);
+			alloc->size_s_used = alloc->data_l_small.len + sizeof(t_region_d);
 		}
 		else
-			alloc->data_last_small = *new_data_in(alloc->data_small, len, alloc, 1);
-		return (alloc->data_last_small.data);
+			alloc->data_l_small = *new_data_in(alloc->data_small, len, alloc,
+				1);
+		return (alloc->data_l_small.data);
 	}
 }
 
@@ -92,7 +93,7 @@ t_region_d	*find_data(t_region_d *data, void *ptr)
 
 void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 {
-	void 		*p;
+	void	*p;
 
 	data = find_data(data, ptr);
 	if (data->len > size)
@@ -124,9 +125,9 @@ void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 				data->len_left = 0;
 			}
 			if (region == 1)
-				alloc->size_tiny_used -= data->len;
+				alloc->size_t_used -= data->len;
 			else if (region == 2)
-				alloc->size_small_used -= data->len;
+				alloc->size_s_used -= data->len;
 		}
 	}
 }
@@ -141,7 +142,7 @@ void		*ft_realloc(void *ptr, size_t size)
 	else if (find_data(alloc->data_small, ptr))
 		return (realloc_data(ptr, size, alloc->data_small));
 	else
-		return (realloc_data(ptr, size, alloc->data_large));	
+		return (realloc_data(ptr, size, alloc->data_large));
 }
 
 void		ft_free(void *ptr)

@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/16 17:49:24 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/16 18:23:58 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ typedef struct			s_region_d
 typedef struct			s_alloc
 {
 	struct s_region_d	*data_tiny;
-	size_t				size_tiny_used;
-	size_t				total_tiny_used;
-	struct s_region_d	data_last_tiny;
+	size_t				size_t_used;
+	size_t				total_t_used;
+	struct s_region_d	data_l_tiny;
 	struct s_region_d	*data_small;
-	size_t				size_small_used;
-	size_t				total_small_used;
-	struct s_region_d	data_last_small;
+	size_t				size_s_used;
+	size_t				total_s_used;
+	struct s_region_d	data_l_small;
 	struct s_region_d	*data_large;
-	size_t				size_large_used;
-	size_t				total_large_used;
-	struct s_region_d	data_last_large;
+	size_t				size_l_used;
+	size_t				total_l_used;
+	struct s_region_d	data_l_large;
 }						t_alloc;
 
 void					*ft_malloc(size_t len);
@@ -58,4 +58,5 @@ t_region_d				*new_data_in(t_region_d *data_tiny, size_t len,
 void					show_alloc_mem(void);
 void					ft_free(void *ptr);
 void					*ft_realloc(void *ptr, size_t size);
+
 #endif

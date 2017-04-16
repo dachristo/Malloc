@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/11 19:45:07 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/16 18:34:08 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ t_alloc		*singleton(void)
 t_region_d	*new_data(t_region_d *data, size_t len, size_t region)
 {
 	void *p;
+
 	p = mmap(0, region, PROT_READ | PROT_WRITE,
 			MAP_ANON | MAP_PRIVATE, -1, 0);
-	if (p == (void *) -1)
+	if (p == (void *)-1)
 		return (NULL);
 	data = p;
 	data->data = p + sizeof(t_region_d);
@@ -35,7 +36,8 @@ t_region_d	*new_data(t_region_d *data, size_t len, size_t region)
 	return (data);
 }
 
-t_region_d	*new_data_in_if(t_region_d* data, size_t len, t_alloc *alloc, int region)
+t_region_d	*new_data_in_if(t_region_d *data, size_t len, t_alloc *alloc,
+							int region)
 {
 	void *p;
 
@@ -47,17 +49,18 @@ t_region_d	*new_data_in_if(t_region_d* data, size_t len, t_alloc *alloc, int reg
 	data->next->prev = p;
 	data->next->next = NULL;
 	if (region == 0)
-		alloc->size_tiny_used += data->next->len + sizeof(t_region_d);
+		alloc->size_t_used += data->next->len + sizeof(t_region_d);
 	else if (region == 1)
-		alloc->size_small_used += data->next->len + sizeof(t_region_d);
+		alloc->size_s_used += data->next->len + sizeof(t_region_d);
 	return (data->next);
 }
 
-t_region_d	*new_data_in_else(t_region_d* data, size_t len, t_alloc *alloc, int region)
+t_region_d	*new_data_in_else(t_region_d *data, size_t len, t_alloc *alloc,
+								int region)
 {
 	void *p;
 	void *ptr;
-	
+
 	data->isfree = 0;
 	if (data->len > len + sizeof(t_region_d))
 	{
@@ -79,14 +82,14 @@ t_region_d	*new_data_in_else(t_region_d* data, size_t len, t_alloc *alloc, int r
 		data->len = len;
 	}
 	if (region == 0)
-		alloc->size_tiny_used += data->next->len + sizeof(t_region_d);
+		alloc->size_t_used += data->next->len + sizeof(t_region_d);
 	else if (region == 1)
-		alloc->size_small_used += data->next->len + sizeof(t_region_d);
+		alloc->size_s_used += data->next->len + sizeof(t_region_d);
 	return (data);
-
 }
 
-t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc, int region)
+t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
+						int region)
 {
 	void *ptr;
 
@@ -125,17 +128,20 @@ void		show_alloc_mem(void)
 		}
 		data = data->next;
 	}
-	printf("%zu total octects used on %lu\n", TINY * alloc->total_tiny_used + alloc->size_tiny_used, TINY + TINY * alloc->total_tiny_used);
+	printf("%zu total octects used on %lu\n", TINY * alloc->total_t_used +
+			alloc->size_t_used, TINY + TINY * alloc->total_t_used);
 	data = alloc->data_small;
 	printf("SMALL : %p\n", data);
-	while(data != NULL)
+	while (data != NULL)
 	{
 		if (data->isfree != 2)
 		{
-			printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +	data->len, data->len, data->isfree, data->len_left);
+			printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +
+				data->len, data->len, data->isfree, data->len_left);
 		}
 		data = data->next;
 	}
-	printf("%zu total octects used on %lu\n", SMALL * alloc->total_small_used + alloc->size_small_used, SMALL + SMALL * alloc->total_small_used);
+	printf("%zu total octects used on %lu\n", SMALL * alloc->total_s_used +
+			alloc->size_s_used, SMALL + SMALL * alloc->total_s_used);
 	printf("------------------------------------------------------------\n");
 }
