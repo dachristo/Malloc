@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/21 16:56:04 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/21 17:39:51 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,20 @@ void		show_alloc_mem(void)
 	}
 	printf("%zu total octects used on %lu\n", SMALL * alloc->total_s_used +
 			alloc->size_s_used, SMALL + SMALL * alloc->total_s_used);
+	printf("------------------------------------------------------------\n");
+	data = alloc->data_large;
+	printf("LARGE : %p\n", data);
+	while (data != NULL)
+	{
+		if (data->isfree != 2)
+		{
+			printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +
+				data->len, data->len, data->isfree, data->len_left);
+		}
+		data = data->next;
+	}
+	printf("%zu total octects used on %lu\n", alloc->total_l_used +
+			alloc->size_l_used, alloc->total_l_used);
 	printf("------------------------------------------------------------\n");
 }
 

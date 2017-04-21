@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/21 16:57:22 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/21 17:44:37 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_region_d	*find_data(t_region_d *data, void *ptr)
 	{
 		while (data != NULL && data->data != ptr)
 			data = data->next;
-	}
+	}	
 	return (data);
 }
 
@@ -101,20 +101,22 @@ void		*ft_large_ptr(size_t len)
 {
 	t_alloc		*alloc;
 	t_region_d 	*data;
-	
+
 	alloc = singleton();
 	if (alloc->data_large == NULL)
 	{
 		alloc->data_large = new_data(alloc->data_large, len, len);
-		alloc->total_s_used = 0;
+		alloc->total_l_used = 0;
 	}
 	else
-	{	
-		data = find_data(alloc->data_large, NULL);
-		data->next = new_data(data, len, len);
-		alloc->total_s_used++;
+	{
+		data = alloc->data_large;	
+		while (data->next != NULL)
+			data = data->next;
+		data->next = new_data(data->next, len, len);
+		alloc->total_l_used++;
 	}
-	alloc->size_s_used = alloc->data_small->len + sizeof(t_region_d);
+	alloc->size_l_used = alloc->data_large->len + sizeof(t_region_d);
 	return (alloc->data_small->data);
 }
 
@@ -128,9 +130,7 @@ void		*ft_malloc(size_t size)
 		ptr = ft_small_ptr(size);
 	else
 		ptr = ft_large_ptr(size);
-/*			mmap(0, size, PROT_READ | PROT_WRITE,
-				MAP_ANON | MAP_PRIVATE, -1, 0);
-*/	return (ptr);
+	return (ptr);
 }
 
 void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
@@ -151,6 +151,8 @@ void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 				alloc->size_t_used -= data->len;
 			else if (region == 2)
 				alloc->size_s_used -= data->len;
+			else if (region == 3)
+				alloc->size_l_used -= data->len;
 		}
 	}
 }
@@ -175,4 +177,5 @@ void		ft_free(void *ptr)
 	alloc = singleton();
 	free_data(ptr, alloc->data_tiny, alloc, 1);
 	free_data(ptr, alloc->data_small, alloc, 2);
+	free_data(ptr, alloc->data_large, alloc, 3);
 }
