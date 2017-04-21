@@ -6,11 +6,41 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/16 18:28:19 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:39:01 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+
+t_region_d	*find_data(t_region_d *data, void *ptr)
+{
+	if (data != NULL)
+	{
+		while (data != NULL && data->data != ptr)
+			data = data->next;
+	}
+	return (data);
+}
+
+void		*realloc_data(void *ptr, size_t size, t_region_d *data)
+{
+	void	*p;
+
+	data = find_data(data, ptr);
+	if (data->len > size)
+	{
+		data->len = size;
+		data->len_left = data->len - size;
+		p = data->data;
+	}
+	else
+	{
+		p = ft_malloc(size);
+		ft_free(data->data);
+	}
+	return (p);
+}
+
 
 void		*ft_tiny_ptr(size_t len)
 {
@@ -67,6 +97,27 @@ void		*ft_small_ptr(size_t len)
 	}
 }
 
+void		*ft_large_ptr(size_t len)
+{
+	t_alloc		*alloc;
+	t_region_d 	*data;
+	
+	alloc = singleton();
+	if (alloc->data_large == NULL)
+	{
+		alloc->data_large = new_data(data, len, len);
+		alloc->total_s_used = 0;
+	}
+	else
+	{	
+		data = find_data(alloc->data_large, NULL);
+		data->next = new_data(data, len, len);
+		alloc->total_s_used++;
+	}
+	alloc->size_s_used = alloc->data_small->len + sizeof(t_region_d);
+	return (alloc->data_small->data);
+}
+
 void		*ft_malloc(size_t size)
 {
 	void	*ptr;
@@ -76,38 +127,10 @@ void		*ft_malloc(size_t size)
 	else if (size < SMALL_DATA)
 		ptr = ft_small_ptr(size);
 	else
-		ptr = mmap(0, size, PROT_READ | PROT_WRITE,
+		ptr = ft_large_ptr(size);
+/*			mmap(0, size, PROT_READ | PROT_WRITE,
 				MAP_ANON | MAP_PRIVATE, -1, 0);
-	return (ptr);
-}
-
-t_region_d	*find_data(t_region_d *data, void *ptr)
-{
-	if (data != NULL)
-	{
-		while (data != NULL && data->data != ptr)
-			data = data->next;
-	}
-	return (data);
-}
-
-void		*realloc_data(void *ptr, size_t size, t_region_d *data)
-{
-	void	*p;
-
-	data = find_data(data, ptr);
-	if (data->len > size)
-	{
-		data->len = size;
-		data->len_left = data->len - size;
-		p = data->data;
-	}
-	else
-	{
-		p = ft_malloc(size);
-		ft_free(data->data);
-	}
-	return (p);
+*/	return (ptr);
 }
 
 void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)

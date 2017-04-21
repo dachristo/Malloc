@@ -6,13 +6,15 @@
 /*   By: ldubos <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/27 10:06:50 by ldubos            #+#    #+#             */
-/*   Updated: 2015/12/28 20:44:49 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/16 20:06:22 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct		s_list
 {
