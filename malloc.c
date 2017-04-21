@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/21 16:56:02 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:57:22 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 		if (data->data == ptr)
 		{
 			data->isfree = 1;
-			//ft_bzero(ptr, data->len);
+			ft_bzero(ptr, data->len);
 			if (data->len_left != 0)
 			{
 				data->len += data->len_left;

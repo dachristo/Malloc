@@ -1,3 +1,5 @@
 *.swn
 *.swp
 *.swo
+*.o
+malloc
