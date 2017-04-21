@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/16 18:23:58 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:52:40 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <sys/types.h>
 # include <stdio.h>
 # include <unistd.h>
-# include "libft/libft.h"
 
 typedef struct			s_region_d
 {
@@ -58,5 +57,6 @@ t_region_d				*new_data_in(t_region_d *data_tiny, size_t len,
 void					show_alloc_mem(void);
 void					ft_free(void *ptr);
 void					*ft_realloc(void *ptr, size_t size);
+void					ft_bzero(void *s, size_t n);
 
 #endif

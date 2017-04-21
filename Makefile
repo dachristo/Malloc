@@ -6,13 +6,11 @@
 #    By: dchristo <ybarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 11:35:46 by dchristo          #+#    #+#              #
-#    Updated: 2017/04/16 19:07:28 by dchristo         ###   ########.fr        #
+#    Updated: 2017/04/21 16:48:56 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = malloc
-
-PATH_INC = ./libft/
 
 CC = gcc
 
@@ -25,10 +23,9 @@ OBJS = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C libft/
 	@echo "\033[0m";
-	$(CC) $(CFLAGS) -I $(PATH_INC) -c $(SRC)
-	$(CC) -o $(NAME) $(OBJS) -lm -L libft/ -lft
+	$(CC) $(CFLAGS) -c $(SRC)
+	$(CC) -o $(NAME) $(OBJS)
 	@echo "\033[1;5;1;36m";
 	@echo "+---------------------------------------------+";
 	@echo "|    _____          .__  .__                  |";
@@ -41,12 +38,10 @@ $(NAME): $(OBJ)
 	@echo "\033[0m";
 
 clean:
-	make -C libft/ clean
 	@rm -rf $(OBJS)
 	@echo "Clean done"
 
 fclean: clean
-	make -C libft/ fclean
 	@rm -rf $(NAME)
 	@echo "Fclean done"
 

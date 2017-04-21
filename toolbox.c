@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/16 18:34:08 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:56:04 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,16 @@ void		show_alloc_mem(void)
 	printf("%zu total octects used on %lu\n", SMALL * alloc->total_s_used +
 			alloc->size_s_used, SMALL + SMALL * alloc->total_s_used);
 	printf("------------------------------------------------------------\n");
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t i;
+
+	i = 0;
+	while (i < n)
+	{
+		((char *)s)[i] = '\0';
+		i++;
+	}
 }
