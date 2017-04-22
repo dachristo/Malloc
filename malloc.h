@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/21 17:35:24 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/21 17:49:33 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct			s_alloc
 	struct s_region_d	data_l_small;
 	struct s_region_d	*data_large;
 	size_t				size_l_used;
-	size_t				total_l_used;
 	struct s_region_d	data_l_large;
 }						t_alloc;
 
