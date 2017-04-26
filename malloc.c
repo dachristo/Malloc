@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/26 19:08:02 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:21:59 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_region_d	*find_data(t_region_d *data, void *ptr)
 	if (data != NULL)
 	{
 		while (data != NULL && data->data != ptr)
-			data = data->next;
+			data = data->next;	
 	}	
 	return (data);
 }
@@ -35,8 +35,8 @@ void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 	}
 	else
 	{
-		ft_free(data->data);
 		p = ft_malloc(size);
+		ft_free(data->data);
 	}
 	return (p);
 }
@@ -115,7 +115,7 @@ void		*ft_large_ptr(size_t len)
 		data = alloc->data_large;	
 		while (data->next != NULL)
 			data = data->next;
-		data->next = new_data(data->next, len, len);
+		data->next = new_data(data->next, len, len + sizeof(t_region_d));
 		data->next->prev = data;
 		alloc->size_l_used += data->next->len + sizeof(t_region_d);
 		return (data->next->data);
@@ -172,9 +172,7 @@ void		*ft_realloc(void *ptr, size_t size)
 
 void		free_large(void *ptr, t_region_d *data, t_alloc *alloc)
 {
-	printf("%p\n", ptr);
 	data = find_data(data, ptr);
-	printf("%p\n", data);
 	if (data != NULL)
 	{
 		if (data->data == ptr)
@@ -192,9 +190,7 @@ void		free_large(void *ptr, t_region_d *data, t_alloc *alloc)
 			else
 				data->prev->next = data->next;
 			alloc->size_l_used -= data->len;
-			printf("munmap\n");
 			munmap(data, data->len + sizeof(t_region_d));
-			printf("%p\n", alloc->data_large->data);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/26 19:00:34 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:26:09 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,8 @@ t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
 		return (new_data_in_else(data, len, alloc, region));
 }
 
-void		show_alloc_mem(void)
+void		show_tiny_mem(t_region_d *data, t_alloc *alloc)
 {
-	t_alloc		*alloc;
-	t_region_d	*data;
-
-	alloc = singleton();
-	data = alloc->data_tiny;
 	printf("TINY : %p\n", data);
 	while (data != NULL)
 	{
@@ -121,7 +116,10 @@ void		show_alloc_mem(void)
 	}
 	printf("%zu total octects used on %lu\n", TINY * alloc->total_t_used +
 			alloc->size_t_used, TINY + TINY * alloc->total_t_used);
-	data = alloc->data_small;
+}
+
+void		show_small_mem(t_region_d *data, t_alloc *alloc)
+{
 	printf("SMALL : %p\n", data);
 	while (data != NULL)
 	{
@@ -134,18 +132,29 @@ void		show_alloc_mem(void)
 	}
 	printf("%zu total octects used on %lu\n", SMALL * alloc->total_s_used +
 			alloc->size_s_used, SMALL + SMALL * alloc->total_s_used);
-	printf("------------------------------------------------------------\n");
-	data = alloc->data_large;
+}
+
+void		show_large_mem(t_region_d *data, t_alloc *alloc)
+{
 	printf("LARGE : %p\n", data);
 	while (data != NULL)
 	{
-		printf("%p\n", data->data);	
-		printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +
-				data->len, data->len, data->isfree, data->len_left);
+		printf("%p - %p : %zu octects %zu\n", data->data, data->data +
+				data->len, data->len, data->len_left);
 		data = data->next;
 	}
 	printf("%zu total octects used\n", alloc->size_l_used);
-	printf("------------------------------------------------------------\n");
+}
+
+void		show_alloc_mem(void)
+{
+	t_alloc		*alloc;
+	t_region_d	*data;
+
+	alloc = singleton();
+	show_tiny_mem(alloc->data_tiny, alloc);
+	show_small_mem(alloc->data_small, alloc);
+	show_large_mem(alloc->data_large, alloc);
 }
 
 void	ft_bzero(void *s, size_t n)
