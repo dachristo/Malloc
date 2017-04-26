@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/22 16:45:38 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/26 19:00:34 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,11 @@ t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
 
 	while ((data->next != NULL && data->isfree == 0) ||
 			(data->isfree == 1 && data->len <= len))
-	{
-		printf("next %zu,  %zu, %d\n", data->len, len, data->isfree);
 		data = data->next;
-	}
 	if (data->next == NULL || data->isfree == 0)
-	{
-		printf("%zu\n", data->len);
 		return (new_data_in_if(data, len, alloc, region));
-	}
 	else
-	{
-		printf("is free\n");
 		return (new_data_in_else(data, len, alloc, region));
-	}
 }
 
 void		show_alloc_mem(void)
@@ -148,11 +139,9 @@ void		show_alloc_mem(void)
 	printf("LARGE : %p\n", data);
 	while (data != NULL)
 	{
-		if (data->isfree != 2)
-		{
-			printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +
+		printf("%p\n", data->data);	
+		printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +
 				data->len, data->len, data->isfree, data->len_left);
-		}
 		data = data->next;
 	}
 	printf("%zu total octects used\n", alloc->size_l_used);

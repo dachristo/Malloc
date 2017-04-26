@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/22 16:53:42 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/26 19:08:02 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 	}
 	else
 	{
-		p = ft_malloc(size);
 		ft_free(data->data);
+		p = ft_malloc(size);
 	}
 	return (p);
 }
@@ -105,8 +105,10 @@ void		*ft_large_ptr(size_t len)
 	alloc = singleton();
 	if (alloc->data_large == NULL)
 	{
-		alloc->data_large = new_data(alloc->data_large, len, len);
+		alloc->data_large = new_data(alloc->data_large, len, len +
+			sizeof(t_region_d));
 		alloc->size_l_used = alloc->data_large->len + sizeof(t_region_d);
+		return (alloc->data_large->data);
 	}
 	else
 	{
@@ -116,8 +118,8 @@ void		*ft_large_ptr(size_t len)
 		data->next = new_data(data->next, len, len);
 		data->next->prev = data;
 		alloc->size_l_used += data->next->len + sizeof(t_region_d);
+		return (data->next->data);
 	}
-	return (alloc->data_small->data);
 }
 
 void		*ft_malloc(size_t size)
@@ -170,19 +172,29 @@ void		*ft_realloc(void *ptr, size_t size)
 
 void		free_large(void *ptr, t_region_d *data, t_alloc *alloc)
 {
-	if (data != NULL)
-		printf("%p, %p\n", data->data, ptr);
+	printf("%p\n", ptr);
 	data = find_data(data, ptr);
-	printf("found it %p\n", data);
+	printf("%p\n", data);
 	if (data != NULL)
 	{
 		if (data->data == ptr)
-		{	
-			printf("it's free\n");
-			data->prev->next = data->next;
-			munmap(data, data->len);
-			data->isfree = 1;
+		{
+			if (!data->prev)
+			{
+				if (data->next)
+				{
+					alloc->data_large = data->next;
+					data->next->prev = NULL;	
+				}
+				else
+					alloc->data_large = NULL;
+			}
+			else
+				data->prev->next = data->next;
 			alloc->size_l_used -= data->len;
+			printf("munmap\n");
+			munmap(data, data->len + sizeof(t_region_d));
+			printf("%p\n", alloc->data_large->data);
 		}
 	}
 }
@@ -192,7 +204,6 @@ void		ft_free(void *ptr)
 	t_alloc	*alloc;
 	
 	alloc = singleton();
-	printf("ptr : %p\n", ptr);	
 	free_data(ptr, alloc->data_tiny, alloc, 1);
 	free_data(ptr, alloc->data_small, alloc, 2);
 	free_large(ptr, alloc->data_large, alloc);
