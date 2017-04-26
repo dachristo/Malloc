@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:37:46 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/26 21:21:27 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:28:27 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 int main(int argc, char **argv)	
 {
 	char *test;
-	/*while (argc - 1)
+	while (argc - 1)
 	{
 		printf("%d\n", atoi(argv[argc - 1]));
 		test = ft_malloc(atoi(argv[argc - 1]));
 		(void)test;
 		argc--;
 		show_alloc_mem();
-	}*/
+	}
 	test = ft_malloc(50);
 	show_alloc_mem();
 	char *test2 = ft_malloc(15);
