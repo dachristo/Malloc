@@ -6,13 +6,41 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:37:46 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/26 21:28:27 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/04/29 16:59:10 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+int		ft_strlen(char *str)
+{
+	int i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+void	ft_putstr(char *str)
+{
+	write(1, str, ft_strlen(str));
+}
+
+char	*write_in(char *str, size_t len, char c)
+{
+	/*ft_putstr("before : {");
+	ft_putstr(str);
+	ft_putstr("}\n");
+	*/for (int i = 0; i < len; i++)
+	{
+		str[i] = c;
+	}
+	/*ft_putstr("after : {");
+	ft_putstr(str);
+	ft_putstr("}\n");*/
+	return (str);
+}
 
 int main(int argc, char **argv)	
 {
@@ -26,38 +54,45 @@ int main(int argc, char **argv)
 		show_alloc_mem();
 	}
 	test = ft_malloc(50);
-	show_alloc_mem();
+	write_in(test, 50, 'a');
 	char *test2 = ft_malloc(15);
-	show_alloc_mem();
+	write_in(test2, 15, 'b');
 	char *test3 = ft_malloc(100);
-	show_alloc_mem();
+	write_in(test3, 100, 'c');
 	char *test4 = ft_malloc(96);
-	show_alloc_mem();
+	write_in(test4, 96, 'd');
 	char *test5 = ft_malloc(12);
-	show_alloc_mem();
+	write_in(test5, 12, 'e');
 	ft_free(test3);
-	show_alloc_mem();
 	char *test6 = ft_malloc(10);
-	show_alloc_mem();
+	write_in(test6, 10, 'f');
 	char *test7 = ft_malloc(10);
-	show_alloc_mem();
+	write_in(test7, 10, 'g');
 	test7 = ft_realloc(test7, 150);
-	show_alloc_mem();
+	write_in(test7, 150, 'h');
 	char *test8 = ft_malloc(4500);
-	show_alloc_mem();
+	write_in(test8, 4500, 'i');
 	char *test9 = ft_malloc(5100);
-	show_alloc_mem();
+	write_in(test9, 5100, 'j');
 	ft_free(test8);
 	show_alloc_mem();
-	ft_realloc(test9, 8500);	
+	ft_free(test9);	
 	show_alloc_mem();
-	char *test10 = ft_malloc(256000);
+	char *test99 = ft_malloc(8500);
 	show_alloc_mem();
+	write_in(test9, 8500, 'j');
+	//ft_realloc(test9, 8500);	
+	//write_in(test9, 5100, 'k');
+	//show_alloc_mem();
+	/*char *test10 = ft_malloc(256000);
+	write_in(test10, 256000, 'l');
+	//show_alloc_mem();
 	char *test11 = ft_malloc(512000);
-	show_alloc_mem();
+	write_in(test11, 512000, 'm');
 	ft_free(test10);
 	show_alloc_mem();
-	ft_realloc(test11, 856000);	
-	show_alloc_mem();
-	return (0);
+	//ft_realloc(test11, 856000);	
+	//write_in(test11, 856000, 'n');
+	//show_alloc_mem();
+	*/return (0);
 }
