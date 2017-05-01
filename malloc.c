@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/29 16:58:52 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/01 16:18:02 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 	if (data != NULL)
 	{
 		data->isfree = 1;
-		//ft_bzero(ptr, data->len);
+		ft_bzero(ptr, data->len);
 		if (data->len_left != 0)
 		{
 			data->len += data->len_left;
@@ -195,9 +195,15 @@ void		ft_free(void *ptr)
 
 	alloc = singleton();
 	if (find_data(alloc->data_tiny, ptr))
+	{
 		free_data(ptr, alloc->data_tiny, alloc, 1);
+	}
 	else if (find_data(alloc->data_small, ptr))
+	{
 		free_data(ptr, alloc->data_small, alloc, 2);
+	}
 	else
+	{	
 		free_large(ptr, alloc->data_large, alloc);
+	}
 }

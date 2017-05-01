@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/26 21:26:09 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/01 16:18:04 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ t_region_d	*new_data_in_else(t_region_d *data, size_t len, t_alloc *alloc,
 t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
 						int region)
 {
-	void *ptr;
-
 	while ((data->next != NULL && data->isfree == 0) ||
-			(data->isfree == 1 && data->len <= len))
+			(data->isfree == 1 && data->len <= len && data->next != NULL))
 		data = data->next;
 	if (data->next == NULL || data->isfree == 0)
 		return (new_data_in_if(data, len, alloc, region));
@@ -149,7 +147,6 @@ void		show_large_mem(t_region_d *data, t_alloc *alloc)
 void		show_alloc_mem(void)
 {
 	t_alloc		*alloc;
-	t_region_d	*data;
 
 	alloc = singleton();
 	show_tiny_mem(alloc->data_tiny, alloc);
