@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:37:46 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/01 16:21:19 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/01 18:08:17 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ int main(int argc, char **argv)
 	write_in(test2, 15, 'b');
 	ft_free(test);
 	ft_free(test2);
-	show_alloc_mem();
 	char *test3 = ft_malloc(100);
-	show_alloc_mem();
 	write_in(test3, 100, 'c');
 	char *test4 = ft_malloc(96);
 	write_in(test4, 96, 'd');
@@ -79,22 +77,15 @@ int main(int argc, char **argv)
 	char *test9 = ft_malloc(5100);
 	write_in(test9, 5100, 'j');
 	ft_free(test8);
-	show_alloc_mem();
 	ft_free(test9);	
-	show_alloc_mem();
 	test9 = ft_malloc(8500);
-	show_alloc_mem();
 	test9 = ft_realloc(test9, 8500);	
 	write_in(test9, 8500, 'k');
-	show_alloc_mem();
 	char *test10 = ft_malloc(256000);
 	write_in(test10, 256000, 'l');
-	show_alloc_mem();
 	char *test11 = ft_malloc(512000);
 	write_in(test11, 512000, 'm');
-	show_alloc_mem();
 	ft_free(test10);
-	show_alloc_mem();
 	test11 = ft_realloc(test11, 856000);	
 	write_in(test11, 856000, 'n');
 	show_alloc_mem();
