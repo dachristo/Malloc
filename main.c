@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:37:46 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/01 18:08:17 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/04 17:07:04 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,21 @@ void	ft_putstr(char *str)
 
 char	*write_in(char *str, size_t len, char c)
 {
-	/*ft_putstr("before : {");
+	ft_putstr("before : {");
 	ft_putstr(str);
-	ft_putstr("}\n");
-	*/for (int i = 0; i < len; i++)
+	ft_putstr("}\n");	
+	int i;	
+	for (i = 0; i < len; i++)
 	{
 		str[i] = c;
+		if (i == 20)
+			str[i] = '\0';
 	}
-	/*ft_putstr("after : {");
+	str[i] = '\0';
+	ft_putstr("after : {");
 	ft_putstr(str);
 	ft_putstr("}\n");
-	*/return (str);
+	return (str);
 }
 
 int main(int argc, char **argv)	
@@ -79,7 +83,8 @@ int main(int argc, char **argv)
 	ft_free(test8);
 	ft_free(test9);	
 	test9 = ft_malloc(8500);
-	test9 = ft_realloc(test9, 8500);	
+	write_in(test9, 8500, 'j');
+	test9 = ft_realloc(test9, 8600);	
 	write_in(test9, 8500, 'k');
 	char *test10 = ft_malloc(256000);
 	write_in(test10, 256000, 'l');

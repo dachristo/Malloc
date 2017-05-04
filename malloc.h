@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/04/21 17:49:33 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/04 17:03:14 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ void					show_alloc_mem(void);
 void					ft_free(void *ptr);
 void					*ft_realloc(void *ptr, size_t size);
 void					ft_bzero(void *s, size_t n);
+void					*ft_memcpy(void *str1, const void *str2, size_t n);
 
 #endif

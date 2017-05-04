@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/01 16:18:04 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/04 17:07:03 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,4 +164,17 @@ void	ft_bzero(void *s, size_t n)
 		((char *)s)[i] = '\0';
 		i++;
 	}
+}
+
+void	*ft_memcpy(void *str1, const void *str2, size_t n)
+{
+	size_t i;
+
+	i = 0;
+	while (i < n)
+	{
+		((char *)str1)[i] = ((char *)str2)[i];
+		i++;
+	}
+	return (str1);
 }

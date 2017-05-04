@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/01 16:18:02 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/04 17:07:02 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 	else
 	{
 		p = ft_malloc(size);
+		ft_memcpy(p, data->data, data->len);
 		ft_free(data->data);
 	}
 	return (p);
