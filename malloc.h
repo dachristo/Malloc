@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/04 17:03:14 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/04 18:25:41 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ typedef struct			s_alloc
 	struct s_region_d	*data_tiny;
 	size_t				size_t_used;
 	size_t				total_t_used;
-	struct s_region_d	data_l_tiny;
+	struct s_region_d	*data_l_tiny;
 	struct s_region_d	*data_small;
 	size_t				size_s_used;
 	size_t				total_s_used;
-	struct s_region_d	data_l_small;
+	struct s_region_d	*data_l_small;
 	struct s_region_d	*data_large;
 	size_t				size_l_used;
 	struct s_region_d	data_l_large;
