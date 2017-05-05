@@ -6,7 +6,7 @@
 #    By: dchristo <ybarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 11:35:46 by dchristo          #+#    #+#              #
-#    Updated: 2017/05/01 15:42:59 by dchristo         ###   ########.fr        #
+#    Updated: 2017/05/05 16:41:23 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = gcc
 
 #CFLAGS = -Wall -Wextra -Werror
 
-SRC = main.c malloc.c toolbox.c
+SRC = main2.c malloc.c toolbox.c
 
 OBJS = $(SRC:.c=.o)
 
