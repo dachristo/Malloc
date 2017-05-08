@@ -6,17 +6,23 @@
 #    By: dchristo <ybarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 11:35:46 by dchristo          #+#    #+#              #
-#    Updated: 2017/05/05 16:41:23 by dchristo         ###   ########.fr        #
+#    Updated: 2017/05/08 19:10:09 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = malloc
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+
+NAME = libft_malloc_$(HOSTTYPE).so
+
+LS = libft_malloc.so
 
 CC = gcc
 
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-SRC = main2.c malloc.c toolbox.c
+SRC = malloc.c toolbox.c
 
 OBJS = $(SRC:.c=.o)
 
@@ -25,7 +31,8 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "\033[0m";
 	$(CC) $(CFLAGS) -c $(SRC)
-	$(CC) -o $(NAME) $(OBJS)
+	$(CC) -shared -o $(NAME) $(OBJS)
+	ln -s $(NAME) $(LS)
 	@echo "\033[1;5;1;36m";
 	@echo "+---------------------------------------------+";
 	@echo "|    _____          .__  .__                  |";
@@ -37,12 +44,15 @@ $(NAME): $(OBJ)
 	@echo "+---------------------------------by dchristo-+";
 	@echo "\033[0m";
 
+main:
+	$(CC) main2.c -o main_malloc
+
 clean:
 	@rm -rf $(OBJS)
 	@echo "Clean done"
 
 fclean: clean
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) $(LS) main_malloc
 	@echo "Fclean done"
 
 re: fclean all

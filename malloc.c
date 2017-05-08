@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/05 17:02:40 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/08 16:48:25 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,6 @@ t_region_d	*find_data(t_region_d *data, void *ptr)
 	}
 	return (data);
 }
-
-void		*realloc_data(void *ptr, size_t size, t_region_d *data)
-{
-	data = find_data(data, ptr);
-	if (data != NULL)
-	{
-		if (data->len > size)
-		{
-			data->len_left = data->len - size;
-			data->len = size;
-			ptr = data->data;
-		}
-		else
-		{
-			ptr = ft_malloc(size);
-			ft_memcpy(ptr, data->data, data->len);
-			ft_free(data->data);
-		}
-	}
-	return (ptr);
-}
-
 
 void		*ft_tiny_ptr(size_t len)
 {
@@ -133,7 +111,7 @@ void		*ft_large_ptr(size_t len)
 	}
 }
 
-void		*ft_malloc(size_t size)
+void		*malloc(size_t size)
 {
 	void	*ptr;
 	if (size < TINY_DATA)
@@ -164,19 +142,6 @@ void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 	}
 }
 
-void		*ft_realloc(void *ptr, size_t size)
-{
-	t_alloc	*alloc;
-
-	alloc = singleton();
-	if (find_data(alloc->data_tiny, ptr))
-		return (realloc_data(ptr, size, alloc->data_tiny));
-	else if (find_data(alloc->data_small, ptr))
-		return (realloc_data(ptr, size, alloc->data_small));
-	else
-		return (realloc_data(ptr, size, alloc->data_large));
-}
-
 void		free_large(void *ptr, t_region_d *data, t_alloc *alloc)
 {
 	data = find_data(data, ptr);
@@ -199,21 +164,50 @@ void		free_large(void *ptr, t_region_d *data, t_alloc *alloc)
 	}
 }
 
-void		ft_free(void *ptr)
+
+void		free(void *ptr)
 {
 	t_alloc	*alloc;
 
 	alloc = singleton();
 	if (find_data(alloc->data_tiny, ptr))
-	{
 		free_data(ptr, alloc->data_tiny, alloc, 1);
-	}
 	else if (find_data(alloc->data_small, ptr))
-	{
 		free_data(ptr, alloc->data_small, alloc, 2);
-	}
 	else
-	{	
 		free_large(ptr, alloc->data_large, alloc);
+}
+
+void		*realloc_data(void *ptr, size_t size, t_region_d *data)
+{
+	data = find_data(data, ptr);
+	if (data != NULL)
+	{
+		if (data->len > size)
+		{
+			data->len_left = data->len - size;
+			data->len = size;
+			ptr = data->data;
+		}
+		else
+		{
+			ptr = malloc(size);
+			ft_memcpy(ptr, data->data, data->len);
+			free(data->data);
+		}
 	}
+	return (ptr);
+}
+
+void		*realloc(void *ptr, size_t size)
+{
+	t_alloc	*alloc;
+
+	alloc = singleton();
+	if (find_data(alloc->data_tiny, ptr))
+		return (realloc_data(ptr, size, alloc->data_tiny));
+	else if (find_data(alloc->data_small, ptr))
+		return (realloc_data(ptr, size, alloc->data_small));
+	else
+		return (realloc_data(ptr, size, alloc->data_large));
 }
