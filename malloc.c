@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/08 16:48:25 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/17 15:08:23 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void		*ft_large_ptr(size_t len)
 void		*malloc(size_t size)
 {
 	void	*ptr;
+	
+	ft_putstr("malloc\n");	
 	if (size < TINY_DATA)
 		ptr = ft_tiny_ptr(size);
 	else if (size < SMALL_DATA)
@@ -169,6 +171,7 @@ void		free(void *ptr)
 {
 	t_alloc	*alloc;
 
+	ft_putstr("free\n");
 	alloc = singleton();
 	if (find_data(alloc->data_tiny, ptr))
 		free_data(ptr, alloc->data_tiny, alloc, 1);
@@ -180,6 +183,8 @@ void		free(void *ptr)
 
 void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 {
+	ft_putstr("realloc_data\n");
+	size = size == 0 ? 1 : size;
 	data = find_data(data, ptr);
 	if (data != NULL)
 	{
@@ -196,6 +201,8 @@ void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 			free(data->data);
 		}
 	}
+	else
+		ptr = malloc(size);
 	return (ptr);
 }
 
@@ -203,6 +210,7 @@ void		*realloc(void *ptr, size_t size)
 {
 	t_alloc	*alloc;
 
+	ft_putstr("realloc\n");
 	alloc = singleton();
 	if (find_data(alloc->data_tiny, ptr))
 		return (realloc_data(ptr, size, alloc->data_tiny));

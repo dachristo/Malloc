@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:37:46 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/04 18:29:05 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/17 13:26:20 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int		ft_strlen(char *str)
-{
-	int i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-void	ft_putstr(char *str)
-{
-	write(1, str, ft_strlen(str));
-}
 
 char	*write_in(char *str, size_t len, char c)
 {

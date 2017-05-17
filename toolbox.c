@@ -6,11 +6,12 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/04 18:17:26 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/17 15:10:38 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+#define FT_HEX "ABCDEF"
 
 t_alloc		*singleton(void)
 {
@@ -100,48 +101,67 @@ t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
 		return (new_data_in_else(data, len, alloc, region));
 }
 
+void		ft_putdata(t_region_d *data)
+{
+	ft_puthex((size_t)data->data);
+	ft_putstr("-");
+	ft_puthex((size_t)(data->data + data->len));
+	ft_putstr(" : ");
+	ft_putnbr(data->len);
+	ft_putstr(" octects ");
+	ft_putnbr(data->isfree);
+	ft_putstr(" : ");
+	ft_putnbr(data->len_left);
+	ft_putstr("\n");
+}
+
+
 void		show_tiny_mem(t_region_d *data, t_alloc *alloc)
 {
-	printf("TINY : %p\n", data);
+	ft_putstr("TINY : ");
+	ft_puthex((size_t)data);
+	ft_putstr("\n");
 	while (data != NULL)
 	{
 		if (data->isfree != 2)
-		{
-			printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +
-					data->len, data->len, data->isfree, data->len_left);
-		}
+			ft_putdata(data);
 		data = data->next;
 	}
-	printf("%zu total octects used on %lu\n", TINY * alloc->total_t_used +
-			alloc->size_t_used, TINY + TINY * alloc->total_t_used);
+	ft_putnbr(TINY * alloc->total_t_used + alloc->size_t_used);
+	ft_putstr(" total octects used on ");
+	ft_putnbr(TINY + TINY * alloc->total_t_used);
+	ft_putstr("\n");
 }
 
 void		show_small_mem(t_region_d *data, t_alloc *alloc)
 {
-	printf("SMALL : %p\n", data);
+	ft_putstr("SMALL : ");
+	ft_puthex((size_t)data);
+	ft_putstr("\n");
 	while (data != NULL)
 	{
 		if (data->isfree != 2)
-		{
-			printf("%p - %p : %zu octects %d - %zu\n", data->data, data->data +
-				data->len, data->len, data->isfree, data->len_left);
-		}
+			ft_putdata(data);
 		data = data->next;
 	}
-	printf("%zu total octects used on %lu\n", SMALL * alloc->total_s_used +
-			alloc->size_s_used, SMALL + SMALL * alloc->total_s_used);
+	ft_putnbr(SMALL * alloc->total_s_used + alloc->size_s_used);
+	ft_putstr(" total octects used on ");
+	ft_putnbr(SMALL + SMALL * alloc->total_s_used);
+	ft_putstr("\n");
 }
 
 void		show_large_mem(t_region_d *data, t_alloc *alloc)
 {
-	printf("LARGE : %p\n", data);
+	ft_putstr("LARGE : ");
+	ft_puthex((size_t)data);
+	ft_putstr("\n");
 	while (data != NULL)
 	{
-		printf("%p - %p : %zu octects %zu\n", data->data, data->data +
-				data->len, data->len, data->len_left);
+		ft_putdata(data);
 		data = data->next;
 	}
-	printf("%zu total octects used\n", alloc->size_l_used);
+	ft_putnbr(alloc->size_l_used);
+	ft_putstr(" total octects used\n");
 }
 
 void		show_alloc_mem(void)
@@ -177,4 +197,57 @@ void	*ft_memcpy(void *str1, const void *str2, size_t n)
 		i++;
 	}
 	return (str1);
+}
+
+int		ft_strlen(char *str)
+{
+	int i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+void	ft_putstr(char *str)
+{
+	write(1, str, ft_strlen(str));
+}
+
+void	ft_puthex(size_t n)
+{
+	char	c;
+
+	if (n > 15)
+	{
+		ft_puthex(n / 16);
+		ft_puthex(n % 16);
+	}
+	else
+	{
+		c = (n < 10) ? '0' + n : FT_HEX[n % 10];
+		write(1, &c, 1);
+	}
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+
+void	ft_putnbr(long n)
+{
+	if (n < 0)
+	{
+		ft_putchar('-');
+		n *= -1;
+	}
+	if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putchar(n % 10 + '0');
+	}
+	else if (n < 10)
+	{
+		ft_putchar(n + '0');
+	}
 }

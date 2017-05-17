@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/08 16:03:20 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/17 14:10:01 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,8 @@ t_region_d				*new_data_in(t_region_d *data_tiny, size_t len,
 void					show_alloc_mem(void);
 void					ft_bzero(void *s, size_t n);
 void					*ft_memcpy(void *str1, const void *str2, size_t n);
+void					ft_putstr(char *str);
+void					ft_puthex(size_t n);
+void					ft_putnbr(long n);
 
 #endif

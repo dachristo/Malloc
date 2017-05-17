@@ -3,3 +3,5 @@
 *.swo
 *.o
 malloc
+libft_malloc*.so
+a.out
