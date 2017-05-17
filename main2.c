@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 16:39:38 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/08 19:12:22 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/08 19:53:51 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,23 +214,23 @@ int main(int ac, char **av)
 	}
 	else
 	{
-		printf("test0\n");
+		print("test0\n");
 		test0();
-		printf("test1\n");
+		print("test1\n");
 		test1();
-		printf("test2\n");
+		print("test2\n");
 		test2();
-		printf("test3\n");
+		print("test3\n");
 		test3();
-		printf("test3bis\n");
+		print("test3bis\n");
 		test3bis();
-		printf("test4\n");
+		print("test4\n");
 		test4();
-		printf("test5\n");
+		print("test5\n");
 		test5();
-		printf("test_ex\n");
+		print("test_ex\n");
 		test_ex();
-		printf("test_end\n");
+		print("test_end\n");
 	}
 	return (0);
 }
