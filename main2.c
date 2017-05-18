@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/05 16:39:38 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/08 19:53:51 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/18 18:28:25 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,6 @@ void	print(char *s)
 	write(1, s, strlen(s));
 }
 
-char	*write_in(char *str, size_t len, char c)
-{
-	int i;
-	/*for (i = 0; i < len; i++)
-	{
-		printf("%d\n", i);
-		str[i] = c;
-	}
-	str[i] = '\0';
-	*/return (str);
-}
-
 int test_ex(void)
 {
 	char *str;
@@ -46,39 +34,23 @@ int test_ex(void)
 	while (i < 101)
 	{
 		str = malloc(1024 * 2);
-		write_in(str, 1024 * 2, 'a');
 		i++;
 	}
 	str = malloc(1024);
-	write_in(str, 1024, 'a');
 	str = malloc(1024);
-	write_in(str, 1024, 'a');
 	str = malloc(1024);
-	write_in(str, 1024, 'a');
 	str = malloc(1024 * 32);
-	write_in(str, 1024 * 32, 'a');
 	str = malloc(1024 * 32);
-	write_in(str, 1024 * 32, 'a');
 	str = malloc(1024 * 32);
-	write_in(str, 1024 * 32, 'a');
 	str = malloc(1024 * 32);
-	write_in(str, 1024 * 32, 'a');
 	str = malloc(1024 * 32);
-	write_in(str, 1024 * 32, 'a');
 	str = malloc(1024 * 32);
-	write_in(str, 1024 * 32, 'a');
 	str = malloc(Mo);
-	write_in(str, Mo, 'a');
 	str = malloc(Mo);
-	write_in(str, Mo, 'a');
 	str = malloc(Mo * 1024);
-	write_in(str, Mo * 1024, 'a');
 	str = malloc(Mo * 128);
-	write_in(str, Mo * 128, 'a');
 	str = malloc(Mo * 128);
-	write_in(str, Mo * 128, 'a');
 	str = malloc(Mo * 128);
-	write_in(str, Mo * 128, 'a');
 	return (0);
 }
 
@@ -87,15 +59,10 @@ int test5(void)
 	char *str;
 
 	str = malloc(1024);
-	write_in(str, 1024, 'a');
 	str = malloc(1024 * 32);
-	write_in(str, 1024 * 32, 'a');
 	str = malloc(Mo);
-	write_in(str, Mo, 'a');
 	str = malloc(Mo * 16);
-	write_in(str, Mo * 16, 'a');
 	str = malloc(Mo * 128);
-	write_in(str, Mo * 128, 'a');
 	return (0);
 }
 
@@ -104,7 +71,6 @@ int		test4(void)
 	char *addr;
 
 	addr = malloc(16);
-	write_in(addr, 16, 'a');
 	free(NULL);
 	free((void *)addr + 5);
 	if (realloc((void *)addr + 5, 10) == NULL)
@@ -119,11 +85,8 @@ int		test3bis(void)
 	char *addr3;
 
 	addr1 = (char *)malloc(16 * Mo);
-	write_in(addr1, Mo * 16, 'a');
 	addr2 = (char *)malloc(16 * Mo);
-	write_in(addr2, Mo * 16, 'a');
 	addr3 = (char *)realloc(addr1, 128 * Mo);
-	write_in(addr3, Mo * 128, 'a');
 	return (0);
 }
 
@@ -133,9 +96,7 @@ int		test3(void)
 	char *addr3;
 
 	addr1 = (char *)malloc(16 * Mo);
-	write_in(addr1, Mo * 16, 'a');
 	addr3 = (char *)realloc(addr1, 128 * Mo);
-	write_in(addr3, Mo * 128, 'a');
 	return (0);
 }
 
@@ -148,7 +109,6 @@ int test2(void)
 	while (i < 1024)
 	{
 		addr = (char*)malloc(1024);
-		write_in(addr, 1024, 'a');
 		free(addr);
 		i++;
 	}
@@ -164,10 +124,7 @@ int test1(void)
 	while (i < 1024)
 	{
 		addr = (char*)malloc(1024);
-		write_in(addr, 1024, 'a');
-		addr = (char*)realloc(addr, 2048);
-		write_in(addr, 2048, 'a');
-		free(addr);
+			addr[0] = 42;
 		i++;
 	}
 	return (0);
@@ -181,11 +138,6 @@ int test0(void)
 	i = 0;
 	while (i < 1024)
 	{
-		addr = (char *)malloc(512);
-		write_in(addr, 512, 'a');
-		addr = (char *)realloc(addr, 1023);
-		write_in(addr, 1023, 'a');
-		free(addr);
 		i++;
 	}
 	return (0);
