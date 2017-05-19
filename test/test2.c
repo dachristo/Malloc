@@ -1,17 +1,21 @@
 #include <stdlib.h> 
+#include "../malloc.h"
+
+void	show_alloc_mem();
 
 int main() 
 { 
-int i; 
-char *addr; 
+	int i; 
+	char *addr; 
 
-i = 0; 
-while (i < 1024) 
-{
-addr = (char*)malloc(1024);	
-addr[0] = 42;
-free(addr);
-i++; 
-} 
-return (0); 
-} 
+	int value = 1024;
+	while (value > 0) 
+	{
+		addr = (char*)malloc(value);	
+		addr[0] = 42;
+		free(addr);
+		value--;
+	}
+	show_alloc_mem();
+	return (0); 
+}

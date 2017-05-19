@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/18 19:07:24 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/19 16:34:41 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,12 @@ t_region_d	*new_data_in_else(t_region_d *data, size_t len, t_alloc *alloc,
 t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
 						int region)
 {
-	while ((data->next != NULL && data->isfree == 0) ||
-			(data->isfree == 1 && data->len <= len && data->next != NULL))
+	while (data->next != NULL)
+	{
+		if (data->isfree == 1 && data->len <= len)
+			break;
 		data = data->next;
+	}
 	if (data->next == NULL || data->isfree == 0)
 		return (new_data_in_if(data, len, alloc, region));
 	else
