@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/19 16:34:41 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/20 18:32:34 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,56 +106,50 @@ t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
 
 void		ft_putdata(t_region_d *data)
 {
+	ft_putstr("0x");
 	ft_puthex((size_t)data->data);
-	ft_putstr("-");
+	ft_putstr(" - ");
+	ft_putstr("0x");
 	ft_puthex((size_t)(data->data + data->len));
 	ft_putstr(" : ");
 	ft_putnbr(data->len);
 	ft_putstr(" octects ");
-	ft_putnbr(data->isfree);
-	ft_putstr(" : ");
-	ft_putnbr(data->len_left);
 	ft_putstr("\n");
 }
 
 
-void		show_tiny_mem(t_region_d *data, t_alloc *alloc)
+void		show_tiny_mem(t_region_d *data)
 {
 	ft_putstr("TINY : ");
+	ft_putstr("0x");
 	ft_puthex((size_t)data);
 	ft_putstr("\n");
 	while (data != NULL)
 	{
-		if (data->isfree != 2)
+		if (data->isfree != 1)
 			ft_putdata(data);
 		data = data->next;
 	}
-	ft_putnbr(TINY * alloc->total_t_used + alloc->size_t_used);
-	ft_putstr(" total octects used on ");
-	ft_putnbr(TINY + TINY * alloc->total_t_used);
-	ft_putstr("\n");
 }
 
-void		show_small_mem(t_region_d *data, t_alloc *alloc)
+void		show_small_mem(t_region_d *data)
 {
 	ft_putstr("SMALL : ");
+	ft_putstr("0x");
 	ft_puthex((size_t)data);
 	ft_putstr("\n");
 	while (data != NULL)
 	{
-		if (data->isfree != 2)
+		if (data->isfree != 1)
 			ft_putdata(data);
 		data = data->next;
 	}
-	ft_putnbr(SMALL * alloc->total_s_used + alloc->size_s_used);
-	ft_putstr(" total octects used on ");
-	ft_putnbr(SMALL + SMALL * alloc->total_s_used);
-	ft_putstr("\n");
 }
 
 void		show_large_mem(t_region_d *data, t_alloc *alloc)
 {
 	ft_putstr("LARGE : ");
+	ft_putstr("0x");
 	ft_puthex((size_t)data);
 	ft_putstr("\n");
 	while (data != NULL)
@@ -163,8 +157,11 @@ void		show_large_mem(t_region_d *data, t_alloc *alloc)
 		ft_putdata(data);
 		data = data->next;
 	}
-	ft_putnbr(alloc->size_l_used);
-	ft_putstr(" total octects used\n");
+	ft_putstr("Total : ");	
+	ft_putnbr((SMALL * alloc->total_s_used + alloc->size_s_used) + 
+			(TINY * alloc->total_t_used + alloc->size_t_used) + 
+			(alloc->size_l_used));
+	ft_putstr(" octects\n");
 }
 
 void		show_alloc_mem(void)
@@ -172,8 +169,8 @@ void		show_alloc_mem(void)
 	t_alloc		*alloc;
 
 	alloc = singleton();
-	show_tiny_mem(alloc->data_tiny, alloc);
-	show_small_mem(alloc->data_small, alloc);
+	show_tiny_mem(alloc->data_tiny);
+	show_small_mem(alloc->data_small);
 	show_large_mem(alloc->data_large, alloc);
 }
 
