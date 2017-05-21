@@ -6,11 +6,11 @@
 /*   By: jwalle <jwalle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/08/05 12:17:05 by jwalle            #+#    #+#             */
-/*   Updated: 2017/05/19 16:03:31 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/21 18:39:14 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../malloc.h"
+# include "../include/malloc.h"
 # include <stdlib.h>
 # include <string.h>
 # include <sys/resource.h>

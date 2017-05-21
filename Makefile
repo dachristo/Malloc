@@ -6,7 +6,7 @@
 #    By: dchristo <ybarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 11:35:46 by dchristo          #+#    #+#              #
-#    Updated: 2017/05/18 18:25:04 by dchristo         ###   ########.fr        #
+#    Updated: 2017/05/21 18:38:10 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,16 +22,19 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = malloc.c toolbox.c
+SRCDIR = src
+
+CFILES = malloc.c toolbox.c
+
+SRC = $(patsubst %, $(SRCDIR)/%, $(CFILES))
 
 OBJS = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJS)
 	@echo "\033[0m";
-	$(CC) $(CFLAGS) -c $(SRC)
-	$(CC) -shared -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -shared -o $(NAME)
 	ln -s $(NAME) $(LS)
 	@echo "\033[1;5;1;36m";
 	@echo "+---------------------------------------------+";
@@ -44,9 +47,6 @@ $(NAME): $(OBJ)
 	@echo "+---------------------------------by dchristo-+";
 	@echo "\033[0m";
 
-main:
-	$(CC) main2.c -o main_malloc
-
 clean:
 	@rm -rf $(OBJS)
 	@echo "Clean done"
@@ -56,5 +56,8 @@ fclean: clean
 	@echo "Fclean done"
 
 re: fclean all
+
+%.o: %.c
+			$(CC) -c $< $(CFLAGS) -o $@
 
 .PHONY: clean fclean re all

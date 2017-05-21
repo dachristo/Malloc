@@ -6,11 +6,11 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/20 18:32:34 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/21 18:21:27 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "../include/malloc.h"
 #define FT_HEX "ABCDEF"
 
 t_alloc		*singleton(void)

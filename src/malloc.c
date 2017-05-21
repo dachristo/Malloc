@@ -6,11 +6,11 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/19 16:19:02 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/21 18:21:17 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "../include/malloc.h"
 
 t_region_d	*find_data(t_region_d *data, void *ptr)
 {
