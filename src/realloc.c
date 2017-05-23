@@ -6,13 +6,13 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:32:04 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 13:34:31 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:27:06 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/malloc.h"
 
-void		*realloc_data(void *ptr, size_t size, t_region_d *data)
+static void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 {
 	size = size == 0 ? 1 : size;
 	data = find_data(data, ptr);
@@ -38,9 +38,9 @@ void		*realloc_data(void *ptr, size_t size, t_region_d *data)
 	return (ptr);
 }
 
-void		*realloc(void *ptr, size_t size)
+void			*realloc(void *ptr, size_t size)
 {
-	t_alloc	*alloc;
+	t_alloc		*alloc;
 
 	alloc = singleton();
 	if (find_data(alloc->data_tiny, ptr))

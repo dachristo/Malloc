@@ -6,15 +6,15 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 22:24:13 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 14:08:47 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:27:31 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/malloc.h"
 
-t_region_d	*new_data(t_region_d *data, size_t len, size_t region)
+t_region_d			*new_data(t_region_d *data, size_t len, size_t region)
 {
-	void *p;
+	void			*p;
 
 	p = mmap(0, region, PROT_READ | PROT_WRITE,
 			MAP_ANON | MAP_PRIVATE, -1, 0);
@@ -29,10 +29,10 @@ t_region_d	*new_data(t_region_d *data, size_t len, size_t region)
 	return (data);
 }
 
-t_region_d	*new_data_in_if(t_region_d *data, size_t len, t_alloc *alloc,
-		int region)
+static t_region_d	*new_data_in_if(t_region_d *data, size_t len,
+									t_alloc *alloc, int region)
 {
-	void *p;
+	void			*p;
 
 	p = data;
 	data->next = p + sizeof(t_region_d) + data->len;
@@ -48,10 +48,10 @@ t_region_d	*new_data_in_if(t_region_d *data, size_t len, t_alloc *alloc,
 	return (data->next);
 }
 
-t_region_d	*new_data_in_else(t_region_d *data, size_t len)
+static t_region_d	*new_data_in_else(t_region_d *data, size_t len)
 {
-	void *p;
-	void *ptr;
+	void			*p;
+	void			*ptr;
 
 	data->isfree = 0;
 	if (data->len > len + sizeof(t_region_d))
@@ -76,7 +76,7 @@ t_region_d	*new_data_in_else(t_region_d *data, size_t len)
 	return (data);
 }
 
-t_region_d	*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
+t_region_d			*new_data_in(t_region_d *data, size_t len, t_alloc *alloc,
 		int region)
 {
 	while (data->next != NULL)

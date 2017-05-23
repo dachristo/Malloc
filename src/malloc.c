@@ -6,13 +6,13 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 14:07:11 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:26:54 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/malloc.h"
 
-void		*ft_tiny_ptr(size_t len, t_alloc *alloc)
+static void		*ft_tiny_ptr(size_t len, t_alloc *alloc)
 {
 	if (!alloc->data_tiny)
 	{
@@ -39,7 +39,7 @@ void		*ft_tiny_ptr(size_t len, t_alloc *alloc)
 	}
 }
 
-void		*ft_small_ptr(size_t len, t_alloc *alloc)
+static void		*ft_small_ptr(size_t len, t_alloc *alloc)
 {
 	if (!alloc->data_small)
 	{
@@ -67,7 +67,7 @@ void		*ft_small_ptr(size_t len, t_alloc *alloc)
 	}
 }
 
-void		*ft_large_ptr(size_t len, t_alloc *alloc)
+static void		*ft_large_ptr(size_t len, t_alloc *alloc)
 {
 	t_region_d	*data;
 
@@ -93,10 +93,10 @@ void		*ft_large_ptr(size_t len, t_alloc *alloc)
 	}
 }
 
-void		*malloc(size_t size)
+void			*malloc(size_t size)
 {
-	void	*ptr;
-	t_alloc	*alloc;
+	void		*ptr;
+	t_alloc		*alloc;
 
 	alloc = singleton();
 	if (size <= TINY_DATA)

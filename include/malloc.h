@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 14:08:55 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:30:54 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define TINY_DATA 1024
 # define SMALL (size_t)((16*M + getpagesize())/getpagesize())*getpagesize()
 # define SMALL_DATA 127000
+# define FT_HEX "ABCDEF"
 # include <stddef.h>
 # include <sys/mman.h>
 # include <sys/types.h>
@@ -55,8 +56,6 @@ t_region_d				*new_data_in(t_region_d *data_tiny, size_t len,
 								t_alloc *alloc, int region);
 t_region_d				*find_data(t_region_d *data, void *ptr);
 void					free(void *ptr);
-void					show_alloc_mem(void);
-void					ft_bzero(void *s, size_t n);
 void					ft_putstr(char *str);
 void					ft_puthex(size_t n);
 void					ft_putnbr(long n);

@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:31:24 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 13:49:32 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:27:40 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_alloc		*singleton(void)
 {
-	static t_alloc alloc;
+	static	t_alloc alloc;
 
 	return (&alloc);
 }

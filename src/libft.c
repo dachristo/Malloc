@@ -6,16 +6,15 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:43:48 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 14:09:52 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:30:41 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/malloc.h"
-#define FT_HEX "ABCDEF"
 
-int		ft_strlen(char *str)
+static int		ft_strlen(char *str)
 {
-	int i;
+	int			i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -23,14 +22,14 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_putstr(char *str)
+void			ft_putstr(char *str)
 {
 	write(1, str, ft_strlen(str));
 }
 
-void	*ft_memcpy(void *str1, const void *str2, size_t n)
+void			*ft_memcpy(void *str1, const void *str2, size_t n)
 {
-	size_t i;
+	size_t		i;
 
 	i = 0;
 	while (i < n)
@@ -41,9 +40,9 @@ void	*ft_memcpy(void *str1, const void *str2, size_t n)
 	return (str1);
 }
 
-void	ft_puthex(size_t n)
+void			ft_puthex(size_t n)
 {
-	char	c;
+	char		c;
 
 	if (n > 15)
 	{
@@ -57,9 +56,9 @@ void	ft_puthex(size_t n)
 	}
 }
 
-void	ft_putnbr(long n)
+void			ft_putnbr(long n)
 {
-	char	c;
+	char		c;
 
 	if (n < 0)
 	{

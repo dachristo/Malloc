@@ -6,13 +6,14 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:28:55 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 13:42:56 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:26:20 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/malloc.h"
 
-void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
+static void		free_data(void *ptr, t_region_d *data, t_alloc *alloc,
+						int region)
 {
 	data = find_data(data, ptr);
 	if (data != NULL)
@@ -30,7 +31,7 @@ void		free_data(void *ptr, t_region_d *data, t_alloc *alloc, int region)
 	}
 }
 
-void		free_large(void *ptr, t_region_d *data, t_alloc *alloc)
+static void		free_large(void *ptr, t_region_d *data, t_alloc *alloc)
 {
 	data = find_data(data, ptr);
 	if (data != NULL)
@@ -52,9 +53,9 @@ void		free_large(void *ptr, t_region_d *data, t_alloc *alloc)
 	}
 }
 
-void		free(void *ptr)
+void			free(void *ptr)
 {
-	t_alloc	*alloc;
+	t_alloc		*alloc;
 
 	alloc = singleton();
 	if (find_data(alloc->data_tiny, ptr))
