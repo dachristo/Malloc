@@ -6,7 +6,7 @@
 #    By: dchristo <ybarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 11:35:46 by dchristo          #+#    #+#              #
-#    Updated: 2017/05/21 18:38:10 by dchristo         ###   ########.fr        #
+#    Updated: 2017/05/23 14:12:05 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,17 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRCDIR = src
 
-CFILES = malloc.c toolbox.c
+CFILES = malloc.c realloc.c free.c show_alloc_mem.c\
+		toolbox.c toolbox2.c libft.c
 
 SRC = $(patsubst %, $(SRCDIR)/%, $(CFILES))
+
+NORMINETTE = $(shell norminette $(SRC))
 
 OBJS = $(SRC:.c=.o)
 
 all: $(NAME)
+
 
 $(NAME): $(OBJS)
 	@echo "\033[0m";
@@ -47,12 +51,15 @@ $(NAME): $(OBJS)
 	@echo "+---------------------------------by dchristo-+";
 	@echo "\033[0m";
 
+norm:
+	@echo $(NORMINETTE)
+
 clean:
 	@rm -rf $(OBJS)
 	@echo "Clean done"
 
 fclean: clean
-	@rm -rf $(NAME) $(LS) main_malloc
+	@rm -rf $(NAME) $(LS)
 	@echo "Fclean done"
 
 re: fclean all
@@ -60,4 +67,4 @@ re: fclean all
 %.o: %.c
 			$(CC) -c $< $(CFLAGS) -o $@
 
-.PHONY: clean fclean re all
+.PHONY: clean fclean re all norminette

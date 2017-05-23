@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/18 18:50:49 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/05/23 14:08:55 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,18 @@ typedef struct			s_alloc
 }						t_alloc;
 
 t_alloc					*singleton(void);
-t_region_d				*new_data(t_region_d *data_tiny, size_t len, size_t region);
+t_region_d				*new_data(t_region_d *data_tiny, size_t len,
+								size_t region);
 t_region_d				*new_data_in(t_region_d *data_tiny, size_t len,
 								t_alloc *alloc, int region);
+t_region_d				*find_data(t_region_d *data, void *ptr);
+void					free(void *ptr);
 void					show_alloc_mem(void);
 void					ft_bzero(void *s, size_t n);
-void					*ft_memcpy(void *str1, const void *str2, size_t n);
 void					ft_putstr(char *str);
 void					ft_puthex(size_t n);
 void					ft_putnbr(long n);
+void					*ft_memcpy(void *str1, const void *str2, size_t n);
+void					*malloc(size_t size);
 
 #endif
