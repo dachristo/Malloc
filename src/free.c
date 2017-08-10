@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:28:55 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 14:26:20 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/10 17:33:07 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,24 @@ static void		free_data(void *ptr, t_region_d *data, t_alloc *alloc,
 	if (data != NULL)
 	{
 		data->isfree = 1;
+		printf("---------------------------\n");
+		printf("%p, %p, %p\n", data->prev ? data->prev->data : data->prev, data ? data->data : data, data->next ? data->next->data : data->next);
+		printf("---------------------------\n");
+		if (data->next && data->next->isfree == 1)
+		{
+			data->len += data->next->len + sizeof(t_region_d);
+			if (data->next->len_left != 0)
+				data->len += data->next->len_left;
+			data->next = data->next->next;
+		}
+		if (data->prev && data->prev->isfree == 1)
+		{
+			data->prev->len += data->len + sizeof(t_region_d);
+			if (data->len_left != 0)
+				data->prev->len += data->len_left;
+			data->next->prev = data->prev;
+			data->prev->next = data->next;
+		}
 		if (data->len_left != 0)
 		{
 			data->len += data->len_left;

@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 14:30:54 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/10 17:07:12 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void					ft_puthex(size_t n);
 void					ft_putnbr(long n);
 void					*ft_memcpy(void *str1, const void *str2, size_t n);
 void					*malloc(size_t size);
+void					show_alloc_mem(void);
 
 #endif
