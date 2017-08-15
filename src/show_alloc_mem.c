@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:49:53 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/15 16:59:41 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 17:01:29 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void			ft_putdata(t_region_d *data)
 {
-	ft_putstr(COLOR_YELLOW);
+	ft_putstr(ANSI_COLOR_YELLOW);
 	ft_putstr("0x");
 	ft_puthex((size_t)data->data);
 	ft_putstr(" - ");
@@ -73,7 +73,7 @@ static void			show_large_mem(t_region_d *data, t_alloc *alloc)
 		ft_putdata(data);
 		data = data->next;
 	}
-	ft_putstr(COLOR_RED);
+	ft_putstr(ANSI_COLOR_RED);
 	ft_putstr("Total : ");
 	ft_putnbr((SMALL * alloc->total_s_used + alloc->size_s_used) +
 			(TINY * alloc->total_t_used + alloc->size_t_used) +
