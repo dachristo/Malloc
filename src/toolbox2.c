@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:31:24 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/15 15:18:18 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 17:03:01 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_alloc		*singleton(void)
 pthread_mutex_t		*ft_mutex(void)
 {
 	static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-	return (mutex);
+	return (&mutex);
 }
 
 t_region_d	*find_data(t_region_d *data, void *ptr)
