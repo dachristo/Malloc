@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:32:04 by dchristo          #+#    #+#             */
-/*   Updated: 2017/05/23 14:27:06 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 15:25:16 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ void			*realloc(void *ptr, size_t size)
 	t_alloc		*alloc;
 
 	alloc = singleton();
+	pthread_mutex_lock(ft_mutex());
 	if (find_data(alloc->data_tiny, ptr))
 		return (realloc_data(ptr, size, alloc->data_tiny));
 	else if (find_data(alloc->data_small, ptr))
 		return (realloc_data(ptr, size, alloc->data_small));
 	else
 		return (realloc_data(ptr, size, alloc->data_large));
+	pthread_mutex_unlock(ft_mutex());
 }

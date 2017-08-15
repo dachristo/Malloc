@@ -6,23 +6,36 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:47:36 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/10 17:07:12 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 15:27:00 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
+
 # define M 1000000
 # define TINY (size_t)((2*M + getpagesize()) / getpagesize())*getpagesize()
 # define TINY_DATA 1024
 # define SMALL (size_t)((16*M + getpagesize())/getpagesize())*getpagesize()
 # define SMALL_DATA 127000
+
 # define FT_HEX "ABCDEF"
+
 # include <stddef.h>
 # include <sys/mman.h>
 # include <sys/types.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <pthread.h>
+
+# define ANSI_COLOR_RED "\x1b[31m"
+# define ANSI_COLOR_GREEN "\x1b[32m"
+# define ANSI_COLOR_YELLOW "\x1b[33m"
+# define ANSI_COLOR_BLUE "\x1b[34m"
+# define ANSI_COLOR_MAGENTA "\x1b[35m"
+# define ANSI_COLOR_CYAN "\x1b[36m"
+# define COLOR_RESET "\x1b[0m"
+# define COLOR_REV "\033[7;7m"
 
 typedef struct			s_region_d
 {
@@ -50,6 +63,7 @@ typedef struct			s_alloc
 }						t_alloc;
 
 t_alloc					*singleton(void);
+pthread_mutex_t			*ft_mutex(void);
 t_region_d				*new_data(t_region_d *data_tiny, size_t len,
 								size_t region);
 t_region_d				*new_data_in(t_region_d *data_tiny, size_t len,

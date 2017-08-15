@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:28:55 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/10 17:33:07 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 15:24:44 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ void			free(void *ptr)
 	t_alloc		*alloc;
 
 	alloc = singleton();
+	pthread_mutex_lock(ft_mutex());
 	if (find_data(alloc->data_tiny, ptr))
 		free_data(ptr, alloc->data_tiny, alloc, 1);
 	else if (find_data(alloc->data_small, ptr))
 		free_data(ptr, alloc->data_small, alloc, 2);
 	else
 		free_large(ptr, alloc->data_large, alloc);
+	pthread_mutex_unlock(ft_mutex());
 }

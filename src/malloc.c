@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/05 16:04:35 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 15:25:03 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void			*malloc(size_t size)
 	t_alloc		*alloc;
 
 	alloc = singleton();
+	pthread_mutex_lock(ft_mutex());
 	if (size <= TINY_DATA)
 		ptr = ft_tiny_ptr(size, alloc);
 	else if (size <= SMALL_DATA)
@@ -106,4 +107,5 @@ void			*malloc(size_t size)
 	else
 		ptr = ft_large_ptr(size, alloc);
 	return (ptr);
+	pthread_mutex_unlock(ft_mutex());
 }

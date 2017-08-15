@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:49:53 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/10 17:31:37 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 15:25:31 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ void				show_alloc_mem(void)
 	t_alloc			*alloc;
 
 	alloc = singleton();
+	pthread_mutex_lock(ft_mutex());
 	show_tiny_mem(alloc->data_tiny);
 	show_small_mem(alloc->data_small);
 	show_large_mem(alloc->data_large, alloc);
+	pthread_mutex_unlock(ft_mutex());
 }
