@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 21:38:26 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/15 15:25:03 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 18:05:55 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ void			*malloc(size_t size)
 		ptr = ft_small_ptr(size, alloc);
 	else
 		ptr = ft_large_ptr(size, alloc);
-	return (ptr);
 	pthread_mutex_unlock(ft_mutex());
+	return (ptr);
 }

@@ -6,7 +6,7 @@
 #    By: jwalle <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/20 17:39:34 by jwalle            #+#    #+#              #
-#    Updated: 2017/08/05 15:59:27 by dchristo         ###   ########.fr        #
+#    Updated: 2017/08/15 17:03:50 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ all :
 	gcc test3.c -o test3
 	gcc test3bis.c -o test3bis
 	gcc test4.c -o test4
-	gcc test5.c -o test5 -L. -lft_malloc
 	gcc test.c -o test -L. -lft_malloc
 
 test0:
@@ -44,7 +43,7 @@ test5:
 	./run.sh /usr/bin/time -l ./test5
 
 clean :
-	rm -rf test0 test1 test2 test3 test3bis test4 test5
+	rm -rf test0 test1 test2 test3 test3bis test4
 	rm -rf *.so
 
-.PHONY: all clean test0 test1 test2 test3 test3bis test4 test5
+.PHONY: all clean test0 test1 test2 test3 test3bis test4

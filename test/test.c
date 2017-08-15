@@ -6,7 +6,7 @@
 /*   By: jwalle <jwalle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/08/05 12:17:05 by jwalle            #+#    #+#             */
-/*   Updated: 2017/08/05 16:01:48 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 17:06:12 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,40 @@ void	print(char *s)
 int test_ex(void)
 {
 	int i = 0;
-
+	char	*str;
 	while (i < 101)
 	{
-		malloc(1024 * 2);
+		str = malloc(1024 * 2);
 		i++;
 	}
-	malloc(1024);
-	malloc(1024);
-	malloc(1024);
-	malloc(1024 * 32);
-	malloc(1024 * 32);
-	malloc(1024 * 32);
-	malloc(1024 * 32);
-	malloc(1024 * 32);
-	malloc(1024 * 32);
-	malloc(1024 * 1024);
-	malloc(1024 * 1024);
-	malloc(1024 * 1024 * 1024);
-	malloc(1024 * 1024 * 128);
-	malloc(1024 * 1024 * 128);
-	malloc(1024 * 1024 * 128);
+	str = malloc(1024);
+	str = malloc(1024);
+	str = malloc(1024);
+	str = malloc(1024 * 32);
+	str = malloc(1024 * 32);
+	str = malloc(1024 * 32);
+	str = malloc(1024 * 32);
+	str = malloc(1024 * 32);
+	str = malloc(1024 * 32);
+	str = malloc(1024 * 1024);
+	str = malloc(1024 * 1024);
+	str = malloc(1024 * 1024 * 1024);
+	str = malloc(1024 * 1024 * 128);
+	str = malloc(1024 * 1024 * 128);
+	str = malloc(1024 * 1024 * 128);
 	show_alloc_mem();
 	return (0);
 }
 
 int test5(void)
 {
-	malloc(1024);
-	malloc(1024 * 32);
-	malloc(1024 * 1024);
-	malloc(1024 * 1024 * 16);
-	malloc(1024 * 1024 * 128);
+	char *str;
+
+	str = malloc(1024);
+	str = malloc(1024 * 32);
+	str = malloc(1024 * 1024);
+	str = malloc(1024 * 1024 * 16);
+	str = malloc(1024 * 1024 * 128);
 	show_alloc_mem();
 	return (0);
 }

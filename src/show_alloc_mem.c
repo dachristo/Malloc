@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:49:53 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/15 17:01:29 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 18:17:31 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void			show_tiny_mem(t_region_d *data)
 			ft_putdata(data);
 		data = data->next;
 	}
+	ft_putstr(COLOR_RESET);
 }
 
 static void			show_small_mem(t_region_d *data)
@@ -52,12 +53,14 @@ static void			show_small_mem(t_region_d *data)
 	ft_putstr("0x");
 	ft_puthex((size_t)data);
 	ft_putstr("\n");
+	ft_putstr(COLOR_RESET);
 	while (data != NULL)
 	{
 		if (data->isfree != 2)
 			ft_putdata(data);
 		data = data->next;
 	}
+	ft_putstr(COLOR_RESET);
 }
 
 static void			show_large_mem(t_region_d *data, t_alloc *alloc)
@@ -68,6 +71,7 @@ static void			show_large_mem(t_region_d *data, t_alloc *alloc)
 	ft_putstr("0x");
 	ft_puthex((size_t)data);
 	ft_putstr("\n");
+	ft_putstr(COLOR_RESET);
 	while (data != NULL)
 	{
 		ft_putdata(data);
