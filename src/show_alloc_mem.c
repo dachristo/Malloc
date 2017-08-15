@@ -6,7 +6,7 @@
 /*   By: dchristo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 13:49:53 by dchristo          #+#    #+#             */
-/*   Updated: 2017/08/15 15:25:31 by dchristo         ###   ########.fr       */
+/*   Updated: 2017/08/15 16:51:58 by dchristo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static void			ft_putdata(t_region_d *data)
 	ft_putstr(" : ");
 	ft_putnbr(data->len);
 	ft_putstr(" octects ");
-	printf(" - %d\n", data->isfree);
-	//ft_putstr("\n");
+	ft_putstr("\n");
 }
 
 static void			show_tiny_mem(t_region_d *data)
