@@ -6,7 +6,7 @@
 #    By: jwalle <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/20 17:39:34 by jwalle            #+#    #+#              #
-#    Updated: 2017/10/12 18:17:00 by dchristo         ###   ########.fr        #
+#    Updated: 2017/10/12 18:24:17 by dchristo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ run_test:
 	./run.sh /usr/bin/time -l ./run_test
 
 clean :
-	rm -rf test0 test1 test2 test3 test3bis test4
+	rm -rf test0 test1 test2 test3 test3bis test4 run_test
 	rm -rf *.so
 
 .PHONY: all clean test0 test1 test2 test3 test3bis test4 run_test
